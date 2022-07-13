@@ -12,4 +12,26 @@ package capa.logica;
 public class Usuario {
     public String nombreDelUsuario = " ";
     public String claveDelUsuario = " ";
+
+    public String getNombreDelUsuario() {
+        return nombreDelUsuario;
+    }
+
+    public void setNombreDelUsuario(String nombreDelUsuario) {
+        this.nombreDelUsuario = nombreDelUsuario;
+    }
+
+    public String getClaveDelUsuario() {
+        return claveDelUsuario;
+    }
+
+    public void setClaveDelUsuario(String claveDelUsuario) {
+        this.claveDelUsuario = claveDelUsuario;
+    }
+    
+    
+
+    
+    
+    
 }

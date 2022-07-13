@@ -5,6 +5,8 @@
  */
 package capa.presentacion;
 
+// Llama a la capa lógica
+// No llama a la persistencia
 /**
  *
  * @author a
@@ -29,35 +31,35 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAfiliado = new javax.swing.JTable();
-        labelAfiliado = new javax.swing.JLabel();
+        labelPersona = new javax.swing.JLabel();
         labelAfiliacion = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaAfiliacion = new javax.swing.JTable();
+        botonBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("ventanaPrincipal"); // NOI18N
         setPreferredSize(new java.awt.Dimension(800, 600));
 
-        tablaAfiliado.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tablaAfiliado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "CI", "ID Local", "Nombre", "Nacionalidad", "Dirección", "Teléfono", "Email", "Fecha de Nacimiento"
+                "CI", "Nombre", "Nacionalidad", "Dirección", "Teléfono", "Email", "Fecha de Nacimiento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -65,23 +67,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tablaAfiliado);
-        if (tablaAfiliado.getColumnModel().getColumnCount() > 0) {
-            tablaAfiliado.getColumnModel().getColumn(4).setResizable(false);
-            tablaAfiliado.getColumnModel().getColumn(4).setHeaderValue("Dirección");
-            tablaAfiliado.getColumnModel().getColumn(5).setHeaderValue("Teléfono");
-            tablaAfiliado.getColumnModel().getColumn(6).setResizable(false);
-            tablaAfiliado.getColumnModel().getColumn(6).setHeaderValue("Email");
-            tablaAfiliado.getColumnModel().getColumn(7).setResizable(false);
-            tablaAfiliado.getColumnModel().getColumn(7).setHeaderValue("Fecha de Nacimiento");
-        }
 
-        labelAfiliado.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        labelAfiliado.setText("Afiliado");
+        labelPersona.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        labelPersona.setText("Persona");
 
         labelAfiliacion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         labelAfiliacion.setText("Afiliación");
 
-        tablaAfiliacion.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tablaAfiliacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -104,6 +96,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tablaAfiliacion);
 
+        botonBuscar.setText("Buscar");
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,28 +110,41 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelAfiliado)
-                    .addComponent(labelAfiliacion)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(175, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelPersona)
+                            .addComponent(labelAfiliacion)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonBuscar))
+                        .addGap(0, 163, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelAfiliado)
+                .addComponent(labelPersona)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonBuscar)
+                .addGap(26, 26, 26)
                 .addComponent(labelAfiliacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(230, Short.MAX_VALUE))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+      //  FachadaLogica
+
+    }//GEN-LAST:event_botonBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,10 +182,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonBuscar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelAfiliacion;
-    private javax.swing.JLabel labelAfiliado;
+    private javax.swing.JLabel labelPersona;
     private javax.swing.JTable tablaAfiliacion;
     private javax.swing.JTable tablaAfiliado;
     // End of variables declaration//GEN-END:variables

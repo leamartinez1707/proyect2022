@@ -9,22 +9,19 @@ import java.util.ArrayList;
 
 /**
  *
- * @author a
+ * @author 006588869
  */
 public class Usuarios {
-    ArrayList <Usuario> usuarios = new ArrayList();
-    
-    /*
-    
+
+    ArrayList<Usuario> usuarios = new ArrayList();
+
     public ArrayList<Usuario> getUsuarios() {
-        
-        Usuarios usuarios = new Usuarios();
         return usuarios;
     }
-    
-    */
-    
+
     public void setUsuarios(ArrayList<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
+    
+
 }

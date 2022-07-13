@@ -5,9 +5,10 @@
  */
 package capa.presentacion;
 
-import capa.persistencia.usuarioPersistencia;
+import capa.logica.FachadaLogica;
 import capa.logica.Usuario;
-import java.sql.DriverManager;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -131,6 +132,9 @@ public class VentanaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConectarActionPerformed
+        
+        //Llamo a la fachada logica
+        
         usuarioEscrito = campoUsuario.getText();
         claveEscrita = campoClave.getText();
         
@@ -138,8 +142,8 @@ public class VentanaLogin extends javax.swing.JFrame {
         nuevoObjetoUsuario.nombreDelUsuario = usuarioEscrito;
         nuevoObjetoUsuario.claveDelUsuario = claveEscrita;
 
-        System.out.println("Usuario escito: " + usuarioEscrito);
-        System.out.println("Contraseña escita: " + claveEscrita);
+        System.out.println("Usuario escrito: " + usuarioEscrito);
+        System.out.println("Contraseña escrita: " + claveEscrita);
 
         System.out.print("nuevoObjetoUsuario.nombreDelUsuario: ");
         System.out.println(nuevoObjetoUsuario.nombreDelUsuario);
@@ -147,17 +151,20 @@ public class VentanaLogin extends javax.swing.JFrame {
         System.out.print("nuevoObjetoUsuario.claveDelUsuario: ");
         System.out.println(nuevoObjetoUsuario.claveDelUsuario);    
         
-        // invoco al existeUsuario con el usuario que cargue en memoria para saber que existe en la base
         
-        usuarioPersistencia nuevoObjetoUsuarioPersistencia = new usuarioPersistencia();
-        boolean existeUsuario = nuevoObjetoUsuarioPersistencia.existeUsuario(nuevoObjetoUsuario);
-        if (existeUsuario) {
-            System.out.println("El usuario existe");
+        Boolean existe = FachadaLogica.existeUsuario(nuevoObjetoUsuario);
+        if (existe) {
+            //le doy la bienvenida
+            System.out.println("EL usuario existe");
+            JLabel mensajeLbl = new JLabel();
+            JOptionPane.showMessageDialog(mensajeLbl, "Bienvenido/a " + usuarioEscrito);
+            VentanaPrincipal nuevaVentanaPrincipal = new VentanaPrincipal();
+            nuevaVentanaPrincipal.setVisible(true);
         } else {
-            System.out.println("El usuario no existe");
+            //lo saco pa juera
+            System.out.println("No esistisssss");
         }
         
-        DriverManager.getDrivers();
     }//GEN-LAST:event_botonConectarActionPerformed
 
     /**

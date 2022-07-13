@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="name" type="java.lang.String" value="ventanaPrincipal" noResource="true"/>
@@ -30,12 +30,18 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="0" min="-2" pref="613" max="-2" attributes="0"/>
-                  <Component id="labelAfiliado" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelAfiliacion" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" alignment="0" min="-2" pref="613" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="labelPersona" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelAfiliacion" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" min="-2" pref="613" max="-2" attributes="0"/>
+                          <Component id="botonBuscar" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="163" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="175" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -43,14 +49,16 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="labelAfiliado" min="-2" max="-2" attributes="0"/>
+              <Component id="labelPersona" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="184" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="botonBuscar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Component id="labelAfiliacion" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane2" min="-2" pref="102" max="-2" attributes="0"/>
-              <EmptySpace pref="230" max="32767" attributes="0"/>
+              <EmptySpace pref="161" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,13 +73,9 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="tablaAfiliado">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="12" style="0"/>
-            </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="8" rowCount="10">
+              <Table columnCount="7" rowCount="10">
                 <Column editable="true" title="CI" type="java.lang.Integer"/>
-                <Column editable="true" title="ID Local" type="java.lang.Integer"/>
                 <Column editable="true" title="Nombre" type="java.lang.String"/>
                 <Column editable="true" title="Nacionalidad" type="java.lang.String"/>
                 <Column editable="true" title="Direcci&#xf3;n" type="java.lang.String"/>
@@ -102,23 +106,18 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title value="Direcci&#xf3;n"/>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title value="Tel&#xe9;fono"/>
+                  <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title value="Email"/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title value="Fecha de Nacimiento"/>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
@@ -131,12 +130,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="labelAfiliado">
+    <Component class="javax.swing.JLabel" name="labelPersona">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Dialog" size="18" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Afiliado"/>
+        <Property name="text" type="java.lang.String" value="Persona"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelAfiliacion">
@@ -156,9 +155,6 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="tablaAfiliacion">
           <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="12" style="0"/>
-            </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="5">
                 <Column editable="true" title="Nombre del Usuario" type="java.lang.String"/>
@@ -198,5 +194,13 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="botonBuscar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonBuscarActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
