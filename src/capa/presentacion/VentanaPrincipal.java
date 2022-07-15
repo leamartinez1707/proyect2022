@@ -6,6 +6,9 @@
 package capa.presentacion;
 
 // Llama a la capa lógica
+
+import capa.logica.FachadaLogica;
+
 // No llama a la persistencia
 /**
  *
@@ -36,11 +39,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaAfiliacion = new javax.swing.JTable();
         botonBuscar = new javax.swing.JButton();
+        labelPersona1 = new javax.swing.JLabel();
+        campoCI = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("ventanaPrincipal"); // NOI18N
         setPreferredSize(new java.awt.Dimension(800, 600));
 
+        tablaAfiliado.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tablaAfiliado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -74,6 +80,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelAfiliacion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         labelAfiliacion.setText("Afiliación");
 
+        tablaAfiliacion.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         tablaAfiliacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -96,12 +103,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tablaAfiliacion);
 
-        botonBuscar.setText("Buscar");
+        botonBuscar.setText("Buscar persona");
         botonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonBuscarActionPerformed(evt);
             }
         });
+
+        labelPersona1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        labelPersona1.setText("Ingrese CI");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,10 +123,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelPersona)
                             .addComponent(labelAfiliacion)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonBuscar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(labelPersona))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelPersona1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(campoCI, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(botonBuscar)))
                         .addGap(0, 163, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -126,14 +143,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(labelPersona)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(campoCI, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                        .addComponent(botonBuscar))
+                    .addComponent(labelPersona1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botonBuscar)
-                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54)
                 .addComponent(labelAfiliacion)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addGap(131, 131, 131))
         );
 
         pack();
@@ -142,7 +163,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
-      //  FachadaLogica
+      //Boolean existe = FachadaLogica.
+      
 
     }//GEN-LAST:event_botonBuscarActionPerformed
 
@@ -183,10 +205,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonBuscar;
+    private javax.swing.JTextField campoCI;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel labelAfiliacion;
     private javax.swing.JLabel labelPersona;
+    private javax.swing.JLabel labelPersona1;
     private javax.swing.JTable tablaAfiliacion;
     private javax.swing.JTable tablaAfiliado;
     // End of variables declaration//GEN-END:variables

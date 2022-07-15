@@ -38,7 +38,7 @@ public class Conexion {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombretemporal?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", usuario, contrasena);
-        
+            
         } catch (SQLException ex) {
             throw new PersistenciaException("Fallo en BD ");
         } catch (ClassNotFoundException ex) {

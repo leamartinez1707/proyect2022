@@ -7,6 +7,9 @@ package capa.presentacion;
 
 import capa.logica.FachadaLogica;
 import capa.logica.Usuario;
+import excepciones.PersistenciaException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -133,36 +136,40 @@ public class VentanaLogin extends javax.swing.JFrame {
 
     private void botonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConectarActionPerformed
         
-        //Llamo a la fachada logica
-        
-        usuarioEscrito = campoUsuario.getText();
-        claveEscrita = campoClave.getText();
-        
-        Usuario nuevoObjetoUsuario = new Usuario();
-        nuevoObjetoUsuario.nombreDelUsuario = usuarioEscrito;
-        nuevoObjetoUsuario.claveDelUsuario = claveEscrita;
-
-        System.out.println("Usuario escrito: " + usuarioEscrito);
-        System.out.println("Contraseña escrita: " + claveEscrita);
-
-        System.out.print("nuevoObjetoUsuario.nombreDelUsuario: ");
-        System.out.println(nuevoObjetoUsuario.nombreDelUsuario);
-        
-        System.out.print("nuevoObjetoUsuario.claveDelUsuario: ");
-        System.out.println(nuevoObjetoUsuario.claveDelUsuario);    
-        
-        
-        Boolean existe = FachadaLogica.existeUsuario(nuevoObjetoUsuario);
-        if (existe) {
-            //le doy la bienvenida
-            System.out.println("EL usuario existe");
-            JLabel mensajeLbl = new JLabel();
-            JOptionPane.showMessageDialog(mensajeLbl, "Bienvenido/a " + usuarioEscrito);
-            VentanaPrincipal nuevaVentanaPrincipal = new VentanaPrincipal();
-            nuevaVentanaPrincipal.setVisible(true);
-        } else {
-            //lo saco pa juera
-            System.out.println("No esistisssss");
+        try {
+            //Llamo a la fachada logica
+            
+            usuarioEscrito = campoUsuario.getText();
+            claveEscrita = campoClave.getText();
+            
+            Usuario nuevoObjetoUsuario = new Usuario();
+            nuevoObjetoUsuario.nombreDelUsuario = usuarioEscrito;
+            nuevoObjetoUsuario.claveDelUsuario = claveEscrita;
+            
+            System.out.println("Usuario escrito: " + usuarioEscrito);
+            System.out.println("Contraseña escrita: " + claveEscrita);
+            
+            System.out.print("nuevoObjetoUsuario.nombreDelUsuario: ");
+            System.out.println(nuevoObjetoUsuario.nombreDelUsuario);
+            
+            System.out.print("nuevoObjetoUsuario.claveDelUsuario: ");
+            System.out.println(nuevoObjetoUsuario.claveDelUsuario);
+            
+            
+            Boolean existe = FachadaLogica.existeUsuario(nuevoObjetoUsuario);
+            if (existe) {
+                //le doy la bienvenida
+                System.out.println("EL usuario existe");
+                JLabel mensajeLbl = new JLabel();
+                JOptionPane.showMessageDialog(mensajeLbl, "Bienvenido/a " + usuarioEscrito);
+                VentanaPrincipal nuevaVentanaPrincipal = new VentanaPrincipal();
+                nuevaVentanaPrincipal.setVisible(true);
+            } else {
+                //lo saco pa juera
+                System.out.println("No esistisssss");
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(VentanaLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_botonConectarActionPerformed

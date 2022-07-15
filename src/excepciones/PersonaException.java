@@ -9,22 +9,22 @@ package excepciones;
  *
  * @author a
  */
-public class UsuarioException extends Exception {
+public class PersonaException extends Exception {
 
     /**
-     * Creates a new instance of <code>UsuarioException</code> without detail
+     * Creates a new instance of <code>PersonaException</code> without detail
      * message.
      */
-    public UsuarioException() {
+    public PersonaException() {
     }
 
     /**
-     * Constructs an instance of <code>UsuarioException</code> with the
+     * Constructs an instance of <code>PersonaException</code> with the
      * specified detail message.
      *
      * @param msg the detail message.
      */
-    public UsuarioException(String msg) {
+    public PersonaException(String msg) {
         super(msg);
     }
 }

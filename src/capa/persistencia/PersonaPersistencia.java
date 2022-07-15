@@ -5,9 +5,11 @@
  */
 package capa.persistencia;
 
+import capa.logica.Persona;
 import capa.logica.Usuarios;
 import capa.logica.Usuario;
 import excepciones.PersistenciaException;
+import excepciones.PersonaException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,21 +25,9 @@ import java.sql.Statement;
 
 public class PersonaPersistencia {
     
-    
-    public Usuarios listaUsuarios(){
-        // jdbc:mysql://localhost:3306/nombretemporal?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC [root on Default schema]
-         // paso 1 : crear la conexion a la base
-         // paso 2 : crear el prepare statement
-         // paso 3 : ejecutar la consulta de prepare statement
-         // paso 4 : cargar los resultados de los objetos de la capa logica si es un select la consulta
-         // paso 5 : cerrar la conexion de la base
-         Usuarios objetoListaUsuarios = new Usuarios();
-         return objetoListaUsuarios;
-    }
-    
-    public boolean existeUsuario (Usuario nuevoObjetoUsuario) throws PersistenciaException, SQLException {
-        
-        boolean resultado = false;
+    public static String[] buscarPersona (Persona nuevoObjetoPersona) throws PersonaException, SQLException, PersistenciaException{
+       
+        String[] datosPersona = new String[7];
         Conexion nuevoObjetoConexion = new Conexion();
         Connection con = nuevoObjetoConexion.conectar();
         
@@ -70,9 +60,13 @@ public class PersonaPersistencia {
         System.out.println("Resultado con: " + con);
         System.out.println("Resultado st: " + st);
         System.out.println("Resultado rs: " + rs);
-        return resultado;
+        return datosPersona;
     }
     
+    public Persona nuevaPersona(){
+        return null;
+    
+    }
     //public boolean validarLogin (Usuario nuevoObjetoUsuario) throws persistenciaExcepion{
         
    // }
