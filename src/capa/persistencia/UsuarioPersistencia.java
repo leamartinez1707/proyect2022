@@ -27,9 +27,19 @@ public class UsuarioPersistencia {
     
     // login
     private static final String PS_LOGIN = "mysql -u ? -p? -h localhost nombretemporal";
-
+    
+    // mal:  static final String PS_LOGIN = "mysql -u ? -p? -h localhost nombretemporal";
+    // usar una tabla en la base de datos para disponer de usuarios para manejar el PROGRAMA.
+    
     //private static final String PS_UPDATE_USUARIO = "UPDATE grupo_centro.usuarios SET apellido = '?' WHERE (nombre = '?')";
     //private static final String PS_INSERT_USUARIO = "INSERT INTO grupo_centro.usuarios (nombre, apellido,clave) VALUES (?, ?, ?)";
+
+    /**
+     *
+     * @param nuevoObjetoUsuario
+     * @throws UsuarioException
+     * @throws PersistenciaException
+     */
 
     public static void ingresarUsuario(Usuario nuevoObjetoUsuario) throws UsuarioException, PersistenciaException {
 
@@ -56,6 +66,10 @@ public class UsuarioPersistencia {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Usuarios listaUsuarios() {
 
         //paso 1 : crear la conexion a la base
@@ -69,6 +83,12 @@ public class UsuarioPersistencia {
 
     }
 
+    /**
+     *
+     * @param nuevoObjetoUsuario
+     * @return
+     * @throws PersistenciaException
+     */
     public static Boolean existeUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException {
 
         //paso 1 : crear la conexion a la base
@@ -103,6 +123,10 @@ public class UsuarioPersistencia {
 
     }
 
+    /**
+     *
+     * @param nuevoObjetoUsuario
+     */
     public void altaUsuario(Usuario nuevoObjetoUsuario) {
 
         //paso 1 : crear la conexion a la base
@@ -111,6 +135,10 @@ public class UsuarioPersistencia {
         //paso 5 : cerrar la conexion a la base
     }
 
+    /**
+     *
+     * @param nuevoObjetoUsuario
+     */
     public void bajaUsuario(Usuario nuevoObjetoUsuario) {
 
         //paso 1 : crear la conexion a la base
@@ -119,6 +147,10 @@ public class UsuarioPersistencia {
         //paso 5 : cerrar la conexion a la base
     }
 
+    /**
+     *
+     * @param nuevoObjetoUsuario
+     */
     public void modificacionUsuario(Usuario nuevoObjetoUsuario) {
 
         //paso 1 : crear la conexion a la base

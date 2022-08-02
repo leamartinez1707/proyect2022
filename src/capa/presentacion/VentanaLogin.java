@@ -21,14 +21,24 @@ import javax.swing.JOptionPane;
 // JDBC  CONNECTOR:
 // jdbc:mysql://localhost:3306/ProyectoBios2022NombrePendiente?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC [root on Default schema]
 public class VentanaLogin extends javax.swing.JFrame {
-
+   
+    /**
+     *
+     */
     public String usuarioEscrito = " ";
+
+    /**
+     *
+     */
     public String claveEscrita = " ";
     /**
      * Creates new form VentanaLogin
      */
     public VentanaLogin() {
+        
         initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Login Proyecto 2022");
     }
 
     /**
@@ -40,103 +50,91 @@ public class VentanaLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        labelUsuario = new javax.swing.JLabel();
-        labelClave = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelImagen = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
+        jLabelUsuario = new javax.swing.JLabel();
+        jLabelContrasena = new javax.swing.JLabel();
         campoUsuario = new javax.swing.JTextField();
-        campoClave = new javax.swing.JTextField();
+        campoClave = new javax.swing.JPasswordField();
         botonCancelar = new javax.swing.JButton();
         botonConectar = new javax.swing.JButton();
-        labelIniciarSesion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
+        setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(java.awt.Color.darkGray);
+        setMinimumSize(new java.awt.Dimension(640, 480));
         setName("ventanaInicioSesion"); // NOI18N
         setResizable(false);
+        setSize(new java.awt.Dimension(640, 480));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        labelUsuario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        labelUsuario.setText("Usuario");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        labelClave.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        labelClave.setText("Contraseña");
+        jLabelImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/bioslog2.jpg"))); // NOI18N
+        jPanel1.add(jLabelImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 450, 310));
 
-        campoUsuario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabelTitulo.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
+        jLabelTitulo.setText("Proyecto Java 2022");
+        jPanel1.add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 230, 30));
 
-        campoClave.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabelUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelUsuario.setText("Usuario:");
+        jLabelUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 80, 40));
 
-        botonCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabelContrasena.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabelContrasena.setText("Contraseña: ");
+        jPanel1.add(jLabelContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 90, 40));
+
+        campoUsuario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        campoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        campoUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel1.add(campoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 90, -1));
+
+        campoClave.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jPanel1.add(campoClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 410, 90, -1));
+
+        botonCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botonCancelar.setText("Cancelar");
         botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonCancelarActionPerformed(evt);
             }
         });
+        jPanel1.add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 380, 100, 40));
 
-        botonConectar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        botonConectar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botonConectar.setText("Conectar");
         botonConectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonConectarActionPerformed(evt);
             }
         });
+        jPanel1.add(botonConectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 100, 40));
 
-        labelIniciarSesion.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        labelIniciarSesion.setText("Iniciar Sesión");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(botonCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                        .addComponent(botonConectar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelUsuario)
-                            .addComponent(labelClave))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(campoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(campoClave))))
-                .addGap(38, 38, 38))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(144, 144, 144)
-                .addComponent(labelIniciarSesion)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(labelIniciarSesion)
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelUsuario)
-                    .addComponent(campoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelClave))
-                .addGap(55, 55, 55)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonCancelar)
-                    .addComponent(botonConectar))
-                .addGap(35, 35, 35))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 480));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void campoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoUsuarioActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         System.exit(0);
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConectarActionPerformed
-        
-        try {
+    try {
             //Llamo a la fachada logica
             
             usuarioEscrito = campoUsuario.getText();
@@ -171,7 +169,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         } catch (PersistenciaException ex) {
             Logger.getLogger(VentanaLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_botonConectarActionPerformed
 
     /**
@@ -212,10 +209,12 @@ public class VentanaLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonConectar;
-    private javax.swing.JTextField campoClave;
+    private javax.swing.JPasswordField campoClave;
     private javax.swing.JTextField campoUsuario;
-    private javax.swing.JLabel labelClave;
-    private javax.swing.JLabel labelIniciarSesion;
-    private javax.swing.JLabel labelUsuario;
+    private javax.swing.JLabel jLabelContrasena;
+    private javax.swing.JLabel jLabelImagen;
+    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLabel jLabelUsuario;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

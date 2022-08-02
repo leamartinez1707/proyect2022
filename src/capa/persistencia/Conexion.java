@@ -28,11 +28,19 @@ public class Conexion {
 
     Connection con = null;
 
+    /**
+     *
+     * @return
+     */
     public Connection getCon() {
         return con;
     }
 
-    
+    /**
+     *
+     * @return
+     * @throws PersistenciaException
+     */
     public Connection conectar() throws PersistenciaException{
         
         try {
@@ -51,9 +59,10 @@ public class Conexion {
         return con;
     }
     
-    
-    
-    
+    /**
+     *
+     * @return
+     */
     public Connection desconectar(){
         Connection con = null;
         try {
@@ -66,6 +75,10 @@ public class Conexion {
         return con;
     }
     
+    /**
+     *
+     * @param con
+     */
     public void desconectar(Connection con){
     
     

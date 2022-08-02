@@ -15,10 +15,18 @@ public class Usuarios {
 
     ArrayList<Usuario> usuarios = new ArrayList();
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Usuario> getUsuarios() {
         return usuarios;
     }
 
+    /**
+     *
+     * @param usuarios
+     */
     public void setUsuarios(ArrayList<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
