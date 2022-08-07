@@ -22,12 +22,10 @@ import java.sql.SQLException;
 public class UsuarioPersistencia {
     
     //buscar usuario
-    //Select user from mysql.user where user=?
-    private static final String PS_SELECT_USUARIO = "Select user from mysql.user where user=?";
-    
-    // login
-    private static final String PS_LOGIN = "mysql -u ? -p? -h localhost nombretemporal";
-    
+    // correccion del login ( 7 de agosto del 2022 ) 
+    // EN NETBEANS: NO REQUIERE USAR APÓSTROFE PARA REPRESENTAR LA COLUMNA: VA TODO PEGADO: nombreUsuario=?    ? ES REEMPLAZADO POR EL VALOR DE LA COLUMNA.
+    private static final String PS_SELECT_USUARIO = "Select * from nombretemporal.usuarios where nombreUsuario=? and claveUsuario=?";
+
     // mal:  static final String PS_LOGIN = "mysql -u ? -p? -h localhost nombretemporal";
     // usar una tabla en la base de datos para disponer de usuarios para manejar el PROGRAMA.
     
@@ -50,7 +48,7 @@ public class UsuarioPersistencia {
         
         try {
             con = nuevoObjetoConexion.conectar();
-            ps = con.prepareStatement(PS_LOGIN);
+            ps = con.prepareStatement(PS_SELECT_USUARIO);
             ps.setString(1,nuevoObjetoUsuario.getNombreDelUsuario());
             ps.setString(2,nuevoObjetoUsuario.getClaveDelUsuario());
 
@@ -59,7 +57,7 @@ public class UsuarioPersistencia {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new UsuarioException("No pude insertar el usuario");
+            throw new UsuarioException("No pude encontrar el usuario");
         } finally {
 
         }
@@ -99,8 +97,6 @@ public class UsuarioPersistencia {
         Boolean resultado = false;
 
         Conexion con = new Conexion();
-        String nombreEscrito = nuevoObjetoUsuario.getNombreDelUsuario();
-        String claveEscrita = nuevoObjetoUsuario.getClaveDelUsuario();
 
         PreparedStatement ps = null;
 
@@ -110,6 +106,7 @@ public class UsuarioPersistencia {
 
             ps = nuevoObjetoConexion.prepareStatement(PS_SELECT_USUARIO);
             ps.setString(1,nuevoObjetoUsuario.getNombreDelUsuario());
+            ps.setString(2,nuevoObjetoUsuario.getClaveDelUsuario());
             rs = ps.executeQuery();
             if (rs.next()) {
                 resultado = true;
