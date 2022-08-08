@@ -28,6 +28,16 @@ public class FachadaLogica {
      * @return
      * @throws PersistenciaException
      */
+    
+    public static Usuarios listarUsuarios() throws UsuarioException {
+        UsuarioPersistencia pers = new UsuarioPersistencia();
+
+        Usuarios mostrarUsuarios = pers.listarUsuarios();
+
+        return mostrarUsuarios;
+
+    }
+    
     public static Boolean existeUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException {
 
         Boolean existe = false;
@@ -35,13 +45,14 @@ public class FachadaLogica {
         return existe;
     }
 
-    /*public static void ingresarUsuario(Usuario nuevoObjetoUsuario) throws UsuarioException, PersistenciaException {
-
-        UsuarioPersistencia.ingresarUsuario(nuevoObjetoUsuario);
+    public static void altaUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException {
+        UsuarioPersistencia pers = new UsuarioPersistencia();
+        pers.altaUsuario(nuevoObjetoUsuario);
         
     }
-     */
+     
 
+    
     /**
      *
      * @return

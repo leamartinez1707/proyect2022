@@ -32,4 +32,8 @@ public class Usuarios {
     }
     
 
+    public void agregarUsuario(Usuario usuario){
+        this.usuarios.add(usuario);
+    }
+    
 }

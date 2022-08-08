@@ -26,10 +26,6 @@ public class VentanaLogin extends javax.swing.JFrame {
      *
      */
     public String usuarioEscrito = " ";
-
-    /**
-     *
-     */
     public String claveEscrita = " ";
     /**
      * Creates new form VentanaLogin
@@ -59,6 +55,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         campoClave = new javax.swing.JPasswordField();
         botonCancelar = new javax.swing.JButton();
         botonConectar = new javax.swing.JButton();
+        botonRegistrarse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -120,6 +117,14 @@ public class VentanaLogin extends javax.swing.JFrame {
         });
         jPanel1.add(botonConectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 100, 40));
 
+        botonRegistrarse.setText("Registrarse");
+        botonRegistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistrarseActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 440, 100, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 480));
 
         pack();
@@ -171,6 +176,12 @@ public class VentanaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonConectarActionPerformed
 
+    private void botonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarseActionPerformed
+        VentanaGestionUsuarios nuevaVentanaGestionUsuarios = new VentanaGestionUsuarios();
+        nuevaVentanaGestionUsuarios.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_botonRegistrarseActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -209,6 +220,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonConectar;
+    private javax.swing.JButton botonRegistrarse;
     private javax.swing.JPasswordField campoClave;
     private javax.swing.JTextField campoUsuario;
     private javax.swing.JLabel jLabelContrasena;
