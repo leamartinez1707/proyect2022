@@ -5,27 +5,49 @@
  */
 package capa.persistencia;
 
+import capa.logica.Persona;
 import capa.logica.Usuario;
 import capa.logica.Usuarios;
 import excepciones.PersistenciaException;
+import excepciones.PersonaException;
 import excepciones.UsuarioException;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author a
  */
 public class UsuarioPersistencia {
-    private static final String PS_SELECT_USUARIO = "Select user from mysql.user where user=?";
+    
+    //buscar usuario
+    // correccion del login ( 7 de agosto del 2022 ) 
+    // EN NETBEANS: NO REQUIERE USAR APÓSTROFE PARA REPRESENTAR LA COLUMNA: VA TODO PEGADO: nombreUsuario=?    ? ES REEMPLAZADO POR EL VALOR DE LA COLUMNA.
+    private static final String PS_SELECT_USUARIO = "Select * from nombretemporal.usuarios where nombreUsuario=? and claveUsuario=?";
+    // mal:  static final String PS_LOGIN = "mysql -u ? -p? -h localhost nombretemporal";
+    // usar una tabla en la base de datos para disponer de usuarios para manejar el PROGRAMA.
+    
+    private static final String PS_INSERT_USUARIO = "INSERT INTO nombretemporal.usuarios (nombreUsuario, claveUsuario) VALUES (?, ?)";
+   
     
     //private static final String PS_UPDATE_USUARIO = "UPDATE grupo_centro.usuarios SET apellido = '?' WHERE (nombre = '?')";
     //private static final String PS_INSERT_USUARIO = "INSERT INTO grupo_centro.usuarios (nombre, apellido,clave) VALUES (?, ?, ?)";
 
-    public static void ingresarUsuario(Usuario usuario) throws UsuarioException, PersistenciaException {
+    /**
+     *
+     * @param nuevoObjetoUsuario
+     * @throws UsuarioException
+     * @throws PersistenciaException
+     */
+/*
+    public static void ingresarUsuario(Usuario nuevoObjetoUsuario) throws UsuarioException, PersistenciaException {
 
         PreparedStatement ps = null;
 
@@ -35,22 +57,26 @@ public class UsuarioPersistencia {
         try {
             con = nuevoObjetoConexion.conectar();
             ps = con.prepareStatement(PS_SELECT_USUARIO);
-            ps.setString(1,usuario.getNombreDelUsuario() );
-            //ps.setString(2, usuario.getClaveDelUsuario());
+            ps.setString(1,nuevoObjetoUsuario.getNombreDelUsuario());
+            ps.setString(2,nuevoObjetoUsuario.getClaveDelUsuario());
 
             System.out.println(ps);
             
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new UsuarioException("No pude insertar el usuario");
+            throw new UsuarioException("No pude encontrar el usuario");
         } finally {
 
         }
 
     }
-
-    public Usuarios listaUsuarios() {
+*/
+    /**
+     *
+     * @return
+     */
+    public Usuarios listarUsuarios() throws UsuarioException {
 
         //paso 1 : crear la conexion a la base
         //paso 2 : crear el prepare statement
@@ -59,11 +85,44 @@ public class UsuarioPersistencia {
         //paso 5 : cerrar la conexion a la base
         Usuarios usuarios = new Usuarios();
 
-        return usuarios;
+        try {
+              
+              Conexion nuevoObjetoConexion = new Conexion();
+              Connection con = nuevoObjetoConexion.conectar();
+              
+              Statement st = null;
+              ResultSet rs = null;
+              
+              st = con.createStatement();
+              rs = st.executeQuery("SELECT * FROM usuarios");
+                      
+              while (rs.next()) {
+                  Usuario usuario = new Usuario();
 
+                  usuario.setNombreDelUsuario(rs.getString("nombreUsuario"));
+                  usuario.setClaveDelUsuario(rs.getString("claveUsuario"));
+                  
+                  usuarios.agregarUsuario(usuario);
+                  
+                  
+              }
+    
+          } catch (PersistenciaException ex) {
+              Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+          } catch (SQLException ex) {
+              Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+          }
+          
+              return usuarios;
     }
 
-    public static Boolean existeUsuario(Usuario usuario) throws PersistenciaException {
+    /**
+     *
+     * @param nuevoObjetoUsuario
+     * @return
+     * @throws PersistenciaException
+     */
+    public static Boolean existeUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException {
 
         //paso 1 : crear la conexion a la base
         //paso 2 : crear el prepare statement
@@ -73,16 +132,16 @@ public class UsuarioPersistencia {
         Boolean resultado = false;
 
         Conexion con = new Conexion();
-        String nombre = usuario.getNombreDelUsuario();
-        String clave = usuario.getClaveDelUsuario();
 
         PreparedStatement ps = null;
 
         ResultSet rs = null;
         try {
-            Connection conexion = con.conectar();
-            String sqlStm = "select * from grupo_centro.usuarios where nombre='" + nombre + "' and clave='" + clave + "';";
-            ps = conexion.prepareStatement(sqlStm);
+            Connection nuevoObjetoConexion = con.conectar();
+
+            ps = nuevoObjetoConexion.prepareStatement(PS_SELECT_USUARIO);
+            ps.setString(1,nuevoObjetoUsuario.getNombreDelUsuario());
+            ps.setString(2,nuevoObjetoUsuario.getClaveDelUsuario());
             rs = ps.executeQuery();
             if (rs.next()) {
                 resultado = true;
@@ -96,7 +155,40 @@ public class UsuarioPersistencia {
 
     }
 
-    public void altaUsuario(Usuario usuario) {
+    /**
+     *
+     * @param nuevoObjetoUsuario
+     */
+    public void altaUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException {
+
+        PreparedStatement ps = null;
+
+        Conexion nuevoObjetoConexion = new Conexion();
+        Connection con = null;
+        
+        try {
+            con = nuevoObjetoConexion.conectar();
+            ps = con.prepareStatement(PS_INSERT_USUARIO);
+            ps.setString(1,nuevoObjetoUsuario.getNombreDelUsuario());
+            ps.setString(2,nuevoObjetoUsuario.getClaveDelUsuario());
+
+            System.out.println(ps);
+            
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            //throw new UsuarioException("No pude agregar el usuario");
+            System.out.println("error ");
+        } finally {
+
+        }
+    }
+
+    /**
+     *
+     * @param nuevoObjetoUsuario
+     */
+    public void bajaUsuario(Usuario nuevoObjetoUsuario) {
 
         //paso 1 : crear la conexion a la base
         //paso 2 : crear el prepare statement
@@ -104,15 +196,11 @@ public class UsuarioPersistencia {
         //paso 5 : cerrar la conexion a la base
     }
 
-    public void bajaUsuario(Usuario usuario) {
-
-        //paso 1 : crear la conexion a la base
-        //paso 2 : crear el prepare statement
-        //paso 3 : ejecutar la consulta del preparestatement
-        //paso 5 : cerrar la conexion a la base
-    }
-
-    public void modificacionUsuario(Usuario usuario) {
+    /**
+     *
+     * @param nuevoObjetoUsuario
+     */
+    public void modificacionUsuario(Usuario nuevoObjetoUsuario) {
 
         //paso 1 : crear la conexion a la base
         //paso 2 : crear el prepare statement
