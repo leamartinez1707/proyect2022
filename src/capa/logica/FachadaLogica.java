@@ -9,34 +9,21 @@ package capa.logica;
 import capa.persistencia.NegocioPersistencia;
 import capa.persistencia.UsuarioPersistencia;
 import capa.persistencia.PersonaPersistencia;
+import capa.persistencia.TipoDeNegocioPersistencia;
 import capa.presentacion.VentanaPrincipal;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
 import excepciones.PersonaException;
+import excepciones.TiposDeNegocioException;
 import excepciones.UsuarioException;
 import java.sql.SQLException;
 
 /**
  *
- * @author a
+ * @author leandro1707
  */
 public class FachadaLogica {
 
-    /**
-     *
-     * @param nuevoObjetoUsuario
-     * @return
-     * @throws PersistenciaException
-     */
-    
-    public static Usuarios listarUsuarios() throws UsuarioException {
-        UsuarioPersistencia pers = new UsuarioPersistencia();
-
-        Usuarios mostrarUsuarios = pers.listarUsuarios();
-
-        return mostrarUsuarios;
-
-    }
     
     public static Boolean existeUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException {
 
@@ -44,20 +31,24 @@ public class FachadaLogica {
         existe = UsuarioPersistencia.existeUsuario(nuevoObjetoUsuario);
         return existe;
     }
+        
+    public static Usuarios listarUsuarios() throws UsuarioException {
+        UsuarioPersistencia pers = new UsuarioPersistencia();
 
-    public static void altaUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException {
+        Usuarios mostrarUsuarios = pers.listaUsuarios();
+
+        return mostrarUsuarios;
+
+    }
+    
+        public static void altaUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException {
+            
         UsuarioPersistencia pers = new UsuarioPersistencia();
         pers.altaUsuario(nuevoObjetoUsuario);
         
-    }
-     
-
+        }
     
-    /**
-     *
-     * @return
-     * @throws PersonaException
-     */
+
 
     public static Personas listarPersonas() throws PersonaException {
         PersonaPersistencia pers = new PersonaPersistencia();
@@ -68,24 +59,35 @@ public class FachadaLogica {
 
     }
 
-    /**
-     *
-     * @return
-     * @throws NegocioException
-     */
     public static Negocios listarNegocios() throws NegocioException {
         NegocioPersistencia neg = new NegocioPersistencia();
 
         Negocios mostrarNegocios = neg.listarNegocios();
 
         return mostrarNegocios;
-
+        
+    }
+        
+     public static void agregarNegocio(Negocio negocio) throws NegocioException{
+        
+     NegocioPersistencia neg = new NegocioPersistencia();
+     neg.agregarNegocio(negocio);
+     
     }
     
     public static void agregarPersona(Persona persona) throws PersonaException{
         PersonaPersistencia per = new PersonaPersistencia();
         per.agregarPersona(persona);
         }
+    
+    public static TiposDeNegocios listarTiposDeNegocios() throws TiposDeNegocioException {
+        TipoDeNegocioPersistencia tipoNeg = new TipoDeNegocioPersistencia();
+
+        TiposDeNegocios mostrarTiposDeNegocios = tipoNeg.listarTiposDeNegocios();
+
+        return mostrarTiposDeNegocios;
+    }
+}
         
     /* public static String[] buscarPersona() throws PersistenciaException, SQLException, PersonaException
     {
@@ -198,4 +200,3 @@ public class FachadaLogica {
             
         }
      */
-}

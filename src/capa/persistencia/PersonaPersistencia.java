@@ -80,7 +80,7 @@ public class PersonaPersistencia extends Conexion {
     public Persona agregarPersona(Persona persona) throws PersonaException {
           
           try {
-            boolean resultado=false; 
+              
             Conexion nuevoObjetoConexion = new Conexion();
             Connection con = nuevoObjetoConexion.conectar();
             PreparedStatement ps = null;
@@ -94,6 +94,7 @@ public class PersonaPersistencia extends Conexion {
             ps.setString(6, persona.getEmail());
             ps.setString(7, persona.getFechaDeNacimiento());
             ps.executeUpdate();
+            
             
             ps.close();
 

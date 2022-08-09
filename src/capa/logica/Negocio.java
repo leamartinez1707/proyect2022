@@ -11,69 +11,45 @@ package capa.logica;
  */
 public class Negocio {
     
-    /**
-     *
-     */
-    public int idNegocio;
+    public String idNegocio;
 
-    /**
-     *
-     */
-    public int idTipoDeNegocio;
+    public String idTipoDeNegocio;
 
-    /**
-     *
-     */
-    public int idAfiliado;
+    public String idAfiliado;
 
-    /**
-     *
-     * @return
-     */
-    public int getIdNegocio() {
+    public String nombreNegocio;
+
+    public String getIdNegocio() {
         return idNegocio;
     }
 
-    /**
-     *
-     * @param idNegocio
-     */
-    public void setIdNegocio(int idNegocio) {
+    public void setIdNegocio(String idNegocio) {
         this.idNegocio = idNegocio;
     }
 
-    /**
-     *
-     * @return
-     */
-    public int getIdTipoDeNegocio() {
+    public String getIdTipoDeNegocio() {
         return idTipoDeNegocio;
     }
 
-    /**
-     *
-     * @param idTipoDeNegocio
-     */
-    public void setIdTipoDeNegocio(int idTipoDeNegocio) {
+    public void setIdTipoDeNegocio(String idTipoDeNegocio) {
         this.idTipoDeNegocio = idTipoDeNegocio;
     }
 
-    /**
-     *
-     * @return
-     */
-    public int getIdAfiliado() {
+    public String getIdAfiliado() {
         return idAfiliado;
     }
 
-    /**
-     *
-     * @param idAfiliado
-     */
-    public void setIdAfiliado(int idAfiliado) {
+    public void setIdAfiliado(String idAfiliado) {
         this.idAfiliado = idAfiliado;
     }
 
-    
+    public String getNombreNegocio() {
+        return nombreNegocio;
+    }
+
+    public void setNombreNegocio(String nombreNegocio) {
+        this.nombreNegocio = nombreNegocio;
+    }
+
     
 }

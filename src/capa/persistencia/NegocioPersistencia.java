@@ -14,6 +14,7 @@ import excepciones.PersistenciaException;
 import excepciones.PersonaException;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,8 +29,7 @@ public class NegocioPersistencia {
 
     /**
      *
-     * @return
-     * @throws NegocioException
+     * @return @throws NegocioException
      */
     public Negocios listarNegocios() throws NegocioException {
         Negocios negocios = new Negocios();
@@ -48,18 +48,11 @@ public class NegocioPersistencia {
             while (rs.next()) {
                 Negocio negocio = new Negocio();
 
-                int NegocioId = rs.getInt("idNegocio");
-                String idNegocioInt = String.valueOf(NegocioId);
-                negocio.setIdNegocio(NegocioId);
-
-                int TipoDeNegocioId = rs.getInt("idTipoDeNegocio");
-                String tipoDeNegocioInt = String.valueOf(TipoDeNegocioId);
-                negocio.setIdTipoDeNegocio(TipoDeNegocioId);
-
-                int AfiliadoId = rs.getInt("idAfiliado");
-                String idAfiliadoInt = String.valueOf(AfiliadoId);
-                negocio.setIdAfiliado(AfiliadoId);
-
+                negocio.setIdNegocio(rs.getString("idNegocio"));               
+                negocio.setIdTipoDeNegocio("idTipoNegocio");
+                negocio.setIdAfiliado("idAfiliado");                                
+                negocio.setNombreNegocio(rs.getString("nombreNegocio"));
+                
                 negocios.agregarNegocio(negocio);
             }
 
@@ -71,5 +64,29 @@ public class NegocioPersistencia {
 
         return negocios;
     }
-  
+
+    public Negocio agregarNegocio(Negocio negocio) throws NegocioException {
+
+        try {
+
+            Conexion nuevoObjetoConexion = new Conexion();
+            Connection con = nuevoObjetoConexion.conectar();
+            PreparedStatement ps = null;
+
+            ps = con.prepareStatement("INSERT INTO Negocio (idTipoDeNegocio, idAfiliado, nombreNegocio) VALUES (?, ?, ?)");
+            ps.setString(1, negocio.getIdTipoDeNegocio());
+            ps.setString(2, negocio.getIdAfiliado());
+            ps.setString(3, negocio.getNombreNegocio());
+            ps.executeUpdate();
+
+            ps.close();
+
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No pude insertar el negocio");
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("No pude insertar negocio, error en la base de datos.");
+        }
+        return negocio;
+    }
 }

@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 // jdbc:mysql://localhost:3306/nombretemporal?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC [root on Default schema]
 public class Conexion {
     String usuario = "root";
-    String contrasena = "root";
+    String contrasena = "password";
 
     Connection con = null;
 

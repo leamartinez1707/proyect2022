@@ -26,6 +26,10 @@ public class VentanaLogin extends javax.swing.JFrame {
      *
      */
     public String usuarioEscrito = " ";
+
+    /**
+     *
+     */
     public String claveEscrita = " ";
     /**
      * Creates new form VentanaLogin
@@ -106,7 +110,7 @@ public class VentanaLogin extends javax.swing.JFrame {
                 botonCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 380, 100, 40));
+        jPanel1.add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 380, 110, 40));
 
         botonConectar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botonConectar.setText("Conectar");
@@ -117,13 +121,13 @@ public class VentanaLogin extends javax.swing.JFrame {
         });
         jPanel1.add(botonConectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 100, 40));
 
-        botonRegistrarse.setText("Registrarse");
+        botonRegistrarse.setText("REGISTRARSE");
         botonRegistrarse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonRegistrarseActionPerformed(evt);
             }
         });
-        jPanel1.add(botonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 440, 100, -1));
+        jPanel1.add(botonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, 110, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 480));
 
@@ -177,9 +181,10 @@ public class VentanaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_botonConectarActionPerformed
 
     private void botonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarseActionPerformed
+                                                 
         VentanaGestionUsuarios nuevaVentanaGestionUsuarios = new VentanaGestionUsuarios();
         nuevaVentanaGestionUsuarios.setVisible(true);
-        this.setVisible(false);
+        this.setVisible(false);        
     }//GEN-LAST:event_botonRegistrarseActionPerformed
 
     /**
