@@ -7,17 +7,13 @@ package capa.persistencia;
 
 import capa.logica.Negocio;
 import capa.logica.Negocios;
-import capa.logica.Persona;
-import capa.logica.Personas;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
-import excepciones.PersonaException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.Statement;      
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,11 +43,18 @@ public class NegocioPersistencia {
 
             while (rs.next()) {
                 Negocio negocio = new Negocio();
-
-                negocio.setIdNegocio(rs.getString("idNegocio"));               
-                negocio.setIdTipoDeNegocio("idTipoNegocio");
-                negocio.setIdAfiliado("idAfiliado");                                
+                
+                int NEGid = rs.getInt("idNegocio");
+                String idNegInt = String.valueOf(NEGid);
+                negocio.setIdNegocio(idNegInt);
+                
+                int NEGafi = rs.getInt("idAfiliado");
+                String idAfiInt = String.valueOf(NEGafi);
+                negocio.setIdAfiliado(idAfiInt);
+                
                 negocio.setNombreNegocio(rs.getString("nombreNegocio"));
+                negocio.setRubro(rs.getString("rubro"));
+                negocio.setDescripcion(rs.getString("descripcion"));
                 
                 negocios.agregarNegocio(negocio);
             }
@@ -73,10 +76,13 @@ public class NegocioPersistencia {
             Connection con = nuevoObjetoConexion.conectar();
             PreparedStatement ps = null;
 
-            ps = con.prepareStatement("INSERT INTO Negocio (idTipoDeNegocio, idAfiliado, nombreNegocio) VALUES (?, ?, ?)");
-            ps.setString(1, negocio.getIdTipoDeNegocio());
-            ps.setString(2, negocio.getIdAfiliado());
+            ps = con.prepareStatement("INSERT INTO Negocio (idAfiliado, rubro, nombreNegocio, descripcion) VALUES (?, ?, ?, ?)");
+            
+                        
+            ps.setString(1, negocio.getIdAfiliado());
+            ps.setString(2, negocio.getRubro());
             ps.setString(3, negocio.getNombreNegocio());
+            ps.setString(4, negocio.getDescripcion());
             ps.executeUpdate();
 
             ps.close();
@@ -89,4 +95,61 @@ public class NegocioPersistencia {
         }
         return negocio;
     }
-}
+    
+    public Negocio modificarNegocio(Negocio negocio) throws NegocioException{
+        
+        try {
+
+            Conexion nuevoObjetoConexion = new Conexion();
+            Connection con = nuevoObjetoConexion.conectar();
+            PreparedStatement ps = null;
+
+            ps = con.prepareStatement("UPDATE negocio SET idAfiliado=?, nombreNegocio=?, rubro=?, descripcion=?" + "WHERE idNegocio=?");
+            
+                        
+            ps.setString(1, negocio.getIdAfiliado());
+            ps.setString(2, negocio.getRubro());
+            ps.setString(3, negocio.getNombreNegocio());
+            ps.setString(4, negocio.getDescripcion());
+            ps.setString(5, negocio.getIdNegocio());
+            
+            ps.executeUpdate();
+            System.out.println("Negocio modificado correctamente");
+            ps.close();
+
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("No pude modificar el negocio");
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("No pude modificar el negocio, error en la base de datos.");
+        }
+        return negocio;
+    }
+            
+    
+    public Negocio eliminarNegocio(Negocio negocio) throws NegocioException{
+        
+        try {
+              
+            Conexion nuevoObjetoConexion = new Conexion();
+            Connection con = nuevoObjetoConexion.conectar();
+            PreparedStatement ps = null;
+             
+            ps = con.prepareStatement("DELETE FROM negocio WHERE (idNegocio=?)");
+            
+            ps.setString(1, negocio.getIdNegocio());
+            ps.executeUpdate();
+            System.out.println("Negocio eliminado correctamente");
+            ps.close();
+
+           } catch (PersistenciaException ex) {
+               throw new NegocioException("No se pudo eliminar el negocio");
+          } catch (SQLException ex) {
+            Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("No se pudo eliminar el negocio, error en la base de datos.");
+        }
+          return negocio;
+                  }
+           
+        
+    }

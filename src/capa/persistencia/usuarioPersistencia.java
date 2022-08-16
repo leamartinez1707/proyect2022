@@ -26,17 +26,20 @@ public class UsuarioPersistencia {
     //buscar usuario
     // correccion del login ( 7 de agosto del 2022 ) 
     // EN NETBEANS: NO REQUIERE USAR APÓSTROFE PARA REPRESENTAR LA COLUMNA: VA TODO PEGADO: nombreUsuario=?    ? ES REEMPLAZADO POR EL VALOR DE LA COLUMNA.
-    private static final String PS_SELECT_USUARIO = "Select * from nombretemporal.usuarios where nombreUsuario=? and claveUsuario=?";
-
+    private static final String PS_SELECT_USUARIO = "Select * from usuarios where nombreUsuario=? and claveUsuario=?";
+    
+    private static final String PS_SELECT_USUARIO_ALTA = "Select * from usuarios where nombreUsuario=?";
     // mal:  static final String PS_LOGIN = "mysql -u ? -p? -h localhost nombretemporal";
     // usar una tabla en la base de datos para disponer de usuarios para manejar el PROGRAMA.
-    private static final String PS_INSERT_USUARIO = "INSERT INTO nombretemporal.usuarios (nombreUsuario, claveUsuario) VALUES (?, ?)";
-   
     
+    private static final String PS_INSERT_USUARIO = "INSERT INTO usuarios (nombreUsuario, claveUsuario) VALUES (?, ?)";
+   
+    private static final String PS_DELETE_USUARIO = "DELETE FROM usuarios WHERE (nombreUsuario = ?)";
     //private static final String PS_UPDATE_USUARIO = "UPDATE grupo_centro.usuarios SET apellido = '?' WHERE (nombre = '?')";
     //private static final String PS_INSERT_USUARIO = "INSERT INTO grupo_centro.usuarios (nombre, apellido,clave) VALUES (?, ?, ?)";
 
 
+    
     public Usuarios listaUsuarios() {
         
         //paso 1 : crear la conexion a la base
@@ -109,6 +112,38 @@ public class UsuarioPersistencia {
         return resultado;
 
     }
+    
+    public static Boolean existeUsuarioParaGestionar(Usuario nuevoObjetoUsuario) throws PersistenciaException {
+
+        //paso 1 : crear la conexion a la base
+        //paso 2 : crear el prepare statement
+        //paso 3 : ejecutar la consulta del preparestatement
+        //paso 4 : cargar los resultados en los objetos de la capa logica si es un select la consulta
+        //paso 5 : cerrar la conexion a la base
+        Boolean resultado = false;
+
+        Conexion con = new Conexion();
+
+        PreparedStatement ps = null;
+
+        ResultSet rs = null;
+        try {
+            Connection nuevoObjetoConexion = con.conectar();
+
+            ps = nuevoObjetoConexion.prepareStatement(PS_SELECT_USUARIO_ALTA);
+            ps.setString(1,nuevoObjetoUsuario.getNombreDelUsuario());
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                resultado = true;
+            }
+
+        } catch (SQLException e) {
+
+        }
+
+        return resultado;
+
+    }
 
     public void altaUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException {
 
@@ -134,13 +169,29 @@ public class UsuarioPersistencia {
 
         }
     }
+       
+        
+   public void bajaUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException {
+        
+        PreparedStatement ps = null;
 
-    public void bajaUsuario(Usuario nuevoObjetoUsuario) {
+        Conexion nuevoObjetoConexion = new Conexion();
+        Connection con = null;
+        
+        try {
+            con = nuevoObjetoConexion.conectar();
+            ps = con.prepareStatement(PS_DELETE_USUARIO);
+            ps.setString(1,nuevoObjetoUsuario.getNombreDelUsuario());
 
-        //paso 1 : crear la conexion a la base
-        //paso 2 : crear el prepare statement
-        //paso 3 : ejecutar la consulta del preparestatement
-        //paso 5 : cerrar la conexion a la base
+            System.out.println(ps);
+            
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("error ");
+        } finally {
+
+        }
     }
 
     public void modificacionUsuario(Usuario nuevoObjetoUsuario) {

@@ -17,7 +17,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -44,7 +43,7 @@ public class PersonaPersistencia extends Conexion {
               ResultSet rs = null;
               
               st = con.createStatement();
-              rs = st.executeQuery("SELECT * FROM persona");
+              rs = st.executeQuery("SELECT * FROM afiliado");
                       
               while (rs.next()) {
                   Persona persona = new Persona();
@@ -53,7 +52,12 @@ public class PersonaPersistencia extends Conexion {
                   String cedulaInt = String.valueOf(CI);
                   persona.setCedulaDeIdentidad(cedulaInt);
                   
+                  int MATRI = rs.getInt("idMatricula");
+                  String matriInt = String.valueOf(MATRI);
+                  persona.setIdMatricula(matriInt);
+                  
                   persona.setNombre(rs.getString("nombre"));
+                  persona.setApellido(rs.getString("apellido"));
                   persona.setNacionalidad(rs.getString("nacionalidad"));
                   persona.setDireccion(rs.getString("direccion"));
                   persona.setTelefono(rs.getString("telefono"));
@@ -85,168 +89,84 @@ public class PersonaPersistencia extends Conexion {
             Connection con = nuevoObjetoConexion.conectar();
             PreparedStatement ps = null;
              
-            ps = con.prepareStatement("INSERT INTO Persona (cedulaIdentidad, nombre, nacionalidad, direccion, telefono, email, fechaDeNacimiento) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            ps = con.prepareStatement("INSERT INTO afiliado (cedulaIdentidad, nombre, apellido, nacionalidad, direccion, telefono, email, fechaDeNacimiento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, persona.getCedulaDeIdentidad());
             ps.setString(2, persona.getNombre());
-            ps.setString(3, persona.getNacionalidad());
-            ps.setString(4, persona.getDireccion());
-            ps.setString(5, persona.getTelefono());
-            ps.setString(6, persona.getEmail());
-            ps.setString(7, persona.getFechaDeNacimiento());
+            ps.setString(3, persona.getApellido());
+            ps.setString(4, persona.getNacionalidad());
+            ps.setString(5, persona.getDireccion());
+            ps.setString(6, persona.getTelefono());
+            ps.setString(7, persona.getEmail());
+            ps.setString(8, persona.getFechaDeNacimiento());
             ps.executeUpdate();
             
             
             ps.close();
 
            } catch (PersistenciaException ex) {
-               throw new PersonaException("No pude insertar persona");
+               throw new PersonaException("No se pudo insertar el afiliado");
           } catch (SQLException ex) {
             Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
-            throw new PersonaException("No pude insertar persona, error en la base de datos.");
+            throw new PersonaException("No se pudo insertar el afiliado, error en la base de datos.");
         }
           return persona;
                   }
-      }
+    
+    public Persona modificarPersona(Persona persona) throws PersonaException {
           
-     
-          /*
-          public boolean ingresarPersona(Persona prsona) throws SQLException, PersistenciaException {
-          PreparedStatement ps = null;
-          Conexion nuevoObjetoConexion = new Conexion();
-          Connection con = nuevoObjetoConexion.conectar();
-          String sql = "INSERT INTO Persona (cedulaIdentidad, nombre, nacionalidad, direccion, telefono, email, fechaDeNacimiento) VALUES (?, ?, ?, ?, ?, ?, ?)";
           try {
-          ps = con.prepareStatement(sql);
-          ps.setString(1, prsona.getCedulaDeIdentidad());
-          ps.setString(2, prsona.getNombre());
-          ps.setString(3, prsona.getNacionalidad());
-          ps.setString(4, prsona.getDireccion());
-          ps.setString(5, prsona.getTelefono());
-          ps.setString(6, prsona.getEmail());
-          ps.setString(7, prsona.getFechaDeNacimiento());
-          ps.execute();
-          return true;
-          } catch (SQLException e) {
-          System.err.println(e);
-          return false;
-          } finally {
-          try {
-          con.close();
-          } catch (SQLException e) {
-          System.err.println(e);
-          }
-          }
-          }
+              
+            Conexion nuevoObjetoConexion = new Conexion();
+            Connection con = nuevoObjetoConexion.conectar();
+            PreparedStatement ps = null;
+             
+            ps = con.prepareStatement("UPDATE afiliado SET nombre=?, apellido=?, nacionalidad=?, direccion=?, telefono=?, email=?, fechaDeNacimiento=?" + "WHERE cedulaIdentidad=?");
+            
+            ps.setString(1, persona.getNombre());
+            ps.setString(2, persona.getApellido());
+            ps.setString(3, persona.getNacionalidad());
+            ps.setString(4, persona.getDireccion());
+            ps.setString(5, persona.getTelefono());
+            ps.setString(6, persona.getEmail());
+            ps.setString(7, persona.getFechaDeNacimiento());
+            ps.setString(8, persona.getCedulaDeIdentidad());
+            ps.executeUpdate();
+            System.out.println("Persona modificada correctamente");
+            ps.close();
 
+           } catch (PersistenciaException ex) {
+               throw new PersonaException("No se pudo modificar al afiliado");
+          } catch (SQLException ex) {
+            Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+            throw new PersonaException("No se pudo modificar al afiliado, error en la base de datos.");
+        }
+          return persona;
+                  }
+ 
+    public Persona eliminarPersona(Persona persona) throws PersonaException {
+          
+          try {
+              
+            Conexion nuevoObjetoConexion = new Conexion();
+            Connection con = nuevoObjetoConexion.conectar();
+            PreparedStatement ps = null;
+             
+            ps = con.prepareStatement("DELETE FROM afiliado WHERE (cedulaIdentidad=?)");
+            
+            ps.setString(1, persona.getCedulaDeIdentidad());
+            
+            
+            ps.executeUpdate();
+            System.out.println("Afiliado eliminado correctamente");
+            ps.close();
 
-          public boolean modificarPersona(Persona prsona) throws SQLException, PersistenciaException {
-          PreparedStatement ps = null;
-          Conexion nuevoObjetoConexion = new Conexion();
-          Connection con = nuevoObjetoConexion.conectar();
-          String sql = "UPDATE Persona SET cedulaIdentidad=?, nombre=?, nacionalidad=?, direccion=?, telefono=?, email=?, fechaDeNacimiento=? WHERE cedulaIdentidad=?";
-          try {
-          ps = con.prepareStatement(sql);
-          ps.setString(1, prsona.getCedulaDeIdentidad());
-          ps.setString(2, prsona.getNombre());
-          ps.setString(3, prsona.getNacionalidad());
-          ps.setString(4, prsona.getDireccion());
-          ps.setString(5, prsona.getTelefono());
-          ps.setString(6, prsona.getEmail());
-          ps.setString(7, prsona.getFechaDeNacimiento());
-          ps.setString(8, prsona.getCedulaDeIdentidad());
-          ps.execute();
-          return true;
-          } catch (SQLException e) {
-          System.err.println(e);
-          return false;
-          } finally {
-          try {
-          con.close();
-          } catch (SQLException e) {
-          System.err.println(e);
-          }
-          }
-          }
-          public boolean eliminarPersona(Persona prsona) throws SQLException, PersistenciaException {
-          PreparedStatement ps = null;
-          Conexion nuevoObjetoConexion = new Conexion();
-          Connection con = nuevoObjetoConexion.conectar();
-          String sql = "DELETE FROM Persona WHERE cedulaIdentidad=?";
-          try {
-          ps = con.prepareStatement(sql);
-          ps.setString(1, prsona.getCedulaDeIdentidad());
-          ps.execute();
-          return true;
-          } catch (SQLException e) {
-          System.err.println(e);
-          return false;
-          } finally {
-          try {
-          con.close();
-          } catch (SQLException e) {
-          System.err.println(e);
-          }
-          }
-          }
-          /*
-          public static boolean buscarPersona(Persona prsona) throws SQLException, PersistenciaException {
-          PreparedStatement ps = null;
-          ResultSet rs = null;
-          Conexion nuevoObjetoConexion = new Conexion();
-          Connection con = nuevoObjetoConexion.conectar();
-          String sql = "SELECT * FROM Persona WHERE cedulaIdentidad=?";
-          try {
-          ps = con.prepareStatement(sql);
-          ps.setString(1, prsona.getCedulaDeIdentidad());
-          rs = ps.executeQuery();
-          if(rs.next())
-          {
-          prsona.setCedulaDeIdentidad(rs.getString("cedulaIdentidad"));
-          prsona.setNombre(rs.getString("nombre"));
-          prsona.setNacionalidad(rs.getString("nacionalidad"));
-          prsona.setDireccion(rs.getString("direccion"));
-          prsona.setTelefono(rs.getString("telefono"));
-          prsona.setEmail(rs.getString("email"));
-          prsona.setFechaDeNacimiento(rs.getString("fechaDeNacimiento"));
-          return true;
-          }
-          return false;
-          } catch (SQLException e) {
-          System.err.println(e);
-          return false;
-          } finally {
-          try {
-          con.close();
-          } catch (SQLException e) {
-          System.err.println(e);
-          }
-          }
-          }
-            catch (SQLException ex) {
-              Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
-          }
-    }
-    
+           } catch (PersistenciaException ex) {
+               throw new PersonaException("No se pudo eliminar al afiliado");
+          } catch (SQLException ex) {
+            Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+            throw new PersonaException("No se pudo insertar al afiliado, error en la base de datos.");
+        }
+          return persona;
+                  }
 }
-
-//public boolean validarLogin (Usuario nuevoObjetoUsuario) throws persistenciaExcepion{
-// }
-/*
-    
-    public Usuarios altaUsuarios(){
-         // paso 1 : crear la conexion a la base
-         // paso 2 : crear el prepare statement
-         // paso 3 : ejecutar la consulta de prepare statement
-         // paso 4 : cargar los resultados de los objetos de la capa logica si es un select la consulta
-         // paso 5 : cerrar la conexion de la base
-    }
-    
-    public Usuarios bajaUsuarios(){
-         // paso 1 : crear la conexion a la base
-         // paso 2 : crear el prepare statement
-         // paso 3 : ejecutar la consulta de prepare statement
-         // paso 4 : cargar los resultados de los objetos de la capa logica si es un select la consulta
-         // paso 5 : cerrar la conexion de la base
-    }
-
- */
+                   

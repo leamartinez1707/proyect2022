@@ -17,6 +17,8 @@ public class Persona {
      *
      */
     public String cedulaDeIdentidad = " ";
+    public String idMatricula = " ";
+    public String apellido = " ";
     public String nombre = " ";
     public String nacionalidad = " ";
     public String direccion = " ";
@@ -41,6 +43,24 @@ public class Persona {
      *
      * @return
      */
+    
+    public String getIdMatricula() {
+        return idMatricula;
+    }
+
+    public void setIdMatricula(String idMatricula) {
+        this.idMatricula = idMatricula;
+    }
+    
+    
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
     public String getNombre() {
         return nombre;
     }

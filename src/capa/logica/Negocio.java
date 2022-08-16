@@ -12,12 +12,30 @@ package capa.logica;
 public class Negocio {
     
     public String idNegocio;
-
-    public String idTipoDeNegocio;
-
+    
     public String idAfiliado;
+    
+    public String rubro;
 
     public String nombreNegocio;
+    
+    public String descripcion;
+
+    public String getRubro() {
+        return rubro;
+    }
+
+    public void setRubro(String rubro) {
+        this.rubro = rubro;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
     public String getIdNegocio() {
         return idNegocio;
@@ -25,14 +43,6 @@ public class Negocio {
 
     public void setIdNegocio(String idNegocio) {
         this.idNegocio = idNegocio;
-    }
-
-    public String getIdTipoDeNegocio() {
-        return idTipoDeNegocio;
-    }
-
-    public void setIdTipoDeNegocio(String idTipoDeNegocio) {
-        this.idTipoDeNegocio = idTipoDeNegocio;
     }
 
     public String getIdAfiliado() {

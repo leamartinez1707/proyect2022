@@ -8,6 +8,7 @@ package capa.presentacion;
 import capa.logica.FachadaLogica;
 import capa.logica.Usuario;
 import excepciones.PersistenciaException;
+import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -17,11 +18,10 @@ import javax.swing.JOptionPane;
  *
  * @author a
  */
-
 // JDBC  CONNECTOR:
 // jdbc:mysql://localhost:3306/ProyectoBios2022NombrePendiente?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC [root on Default schema]
 public class VentanaLogin extends javax.swing.JFrame {
-   
+
     /**
      *
      */
@@ -31,14 +31,16 @@ public class VentanaLogin extends javax.swing.JFrame {
      *
      */
     public String claveEscrita = " ";
+
     /**
      * Creates new form VentanaLogin
      */
     public VentanaLogin() {
-        
+
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Login Proyecto 2022");
+
     }
 
     /**
@@ -110,6 +112,11 @@ public class VentanaLogin extends javax.swing.JFrame {
                 botonCancelarActionPerformed(evt);
             }
         });
+        botonCancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botonCancelarKeyPressed(evt);
+            }
+        });
         jPanel1.add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 380, 110, 40));
 
         botonConectar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -119,12 +126,22 @@ public class VentanaLogin extends javax.swing.JFrame {
                 botonConectarActionPerformed(evt);
             }
         });
+        botonConectar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botonConectarKeyPressed(evt);
+            }
+        });
         jPanel1.add(botonConectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 100, 40));
 
         botonRegistrarse.setText("REGISTRARSE");
         botonRegistrarse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonRegistrarseActionPerformed(evt);
+            }
+        });
+        botonRegistrarse.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                botonRegistrarseKeyPressed(evt);
             }
         });
         jPanel1.add(botonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, 110, 30));
@@ -143,37 +160,37 @@ public class VentanaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConectarActionPerformed
-    try {
+        try {
             //Llamo a la fachada logica
-            
+
             usuarioEscrito = campoUsuario.getText();
             claveEscrita = campoClave.getText();
-            
+
             Usuario nuevoObjetoUsuario = new Usuario();
             nuevoObjetoUsuario.nombreDelUsuario = usuarioEscrito;
             nuevoObjetoUsuario.claveDelUsuario = claveEscrita;
-            
+
             System.out.println("Usuario escrito: " + usuarioEscrito);
             System.out.println("Contraseña escrita: " + claveEscrita);
-            
+
             System.out.print("nuevoObjetoUsuario.nombreDelUsuario: ");
             System.out.println(nuevoObjetoUsuario.nombreDelUsuario);
-            
+
             System.out.print("nuevoObjetoUsuario.claveDelUsuario: ");
             System.out.println(nuevoObjetoUsuario.claveDelUsuario);
-            
-            
+
             Boolean existe = FachadaLogica.existeUsuario(nuevoObjetoUsuario);
             if (existe) {
                 //le doy la bienvenida
-                System.out.println("EL usuario existe");
-                JLabel mensajeLbl = new JLabel();
-                JOptionPane.showMessageDialog(mensajeLbl, "Bienvenido/a " + usuarioEscrito);
+                JOptionPane.showMessageDialog(null, "Usuario correcto");
+                JOptionPane.showMessageDialog(null, "Bienvenido/a " + usuarioEscrito);
                 VentanaPrincipal nuevaVentanaPrincipal = new VentanaPrincipal();
                 nuevaVentanaPrincipal.setVisible(true);
+                this.setVisible(false);
             } else {
                 //lo saco pa juera
-                System.out.println("No esistisssss");
+                JOptionPane.showMessageDialog(null, "El usuario ingresado no existe");
+                System.out.println("No existe el usuario");
             }
         } catch (PersistenciaException ex) {
             Logger.getLogger(VentanaLogin.class.getName()).log(Level.SEVERE, null, ex);
@@ -181,11 +198,36 @@ public class VentanaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_botonConectarActionPerformed
 
     private void botonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarseActionPerformed
-                                                 
+
         VentanaGestionUsuarios nuevaVentanaGestionUsuarios = new VentanaGestionUsuarios();
         nuevaVentanaGestionUsuarios.setVisible(true);
-        this.setVisible(false);        
+        this.setVisible(false);
     }//GEN-LAST:event_botonRegistrarseActionPerformed
+
+    private void botonConectarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botonConectarKeyPressed
+        char cTeclaPresionada = evt.getKeyChar();
+
+        if (cTeclaPresionada == KeyEvent.VK_ENTER) {
+            botonConectar.doClick();
+        }
+    }//GEN-LAST:event_botonConectarKeyPressed
+
+    private void botonCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botonCancelarKeyPressed
+
+        char fTeclaPresionada = evt.getKeyChar();
+
+        if (fTeclaPresionada == KeyEvent.VK_ENTER) {
+            botonCancelar.doClick();
+        }
+    }//GEN-LAST:event_botonCancelarKeyPressed
+
+    private void botonRegistrarseKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botonRegistrarseKeyPressed
+        char rTeclaPresionada = evt.getKeyChar();
+
+        if (rTeclaPresionada == KeyEvent.VK_ENTER) {
+            botonRegistrarse.doClick();
+        }
+    }//GEN-LAST:event_botonRegistrarseKeyPressed
 
     /**
      * @param args the command line arguments

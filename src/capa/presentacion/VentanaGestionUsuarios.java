@@ -261,12 +261,12 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
             if (existe) {
                 //No agrego el usuario, porque ya existe.
                 System.out.println("El usuario ya existe");
-                JLabel mensajeLbl = new JLabel();
-                JOptionPane.showMessageDialog(mensajeLbl, "El Usuario " + usuarioEscrito + " ya existe.");
+                JOptionPane.showMessageDialog(null, "El Usuario " + usuarioEscrito + " ya existe.");
             } else {
                 //Agrego el usuario
-                System.out.println("No esistisssss");
+                System.out.println("Usuario agregado correctamente");
                 FachadaLogica.altaUsuario(nuevoObjetoUsuario);
+                JOptionPane.showMessageDialog(null, "Usuario agregado satisfactoriamente");
             }
         } catch (PersistenciaException ex) {
             Logger.getLogger(VentanaLogin.class.getName()).log(Level.SEVERE, null, ex);
@@ -277,7 +277,9 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAgregarActionPerformed
 
     private void botonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVolverActionPerformed
-        
+        VentanaLogin venL = new VentanaLogin();
+        venL.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_botonVolverActionPerformed
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
