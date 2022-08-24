@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +61,7 @@ public class AfiliacionPersistencia {
         } catch (SQLException ex) {
             Logger.getLogger(AfiliacionPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
+    
         
         return afiliaciones;
     
@@ -73,11 +75,12 @@ public class AfiliacionPersistencia {
             Connection con = nuevoObjetoConexion.conectar();
             PreparedStatement ps = null;
              
-            ps = con.prepareStatement("INSERT INTO afiliacion(nombreAfiliacion, ciAfiliado, descripcion) VALUES (?, ?, ?)");
+            ps = con.prepareStatement("INSERT INTO afiliacion(idAfiliacion, nombreAfiliacion, ciAfiliado, descripcion) VALUES (?, ?, ?, ?)");
             
-            ps.setString(1, afiliacion.getNombreAfiliacion());
-            ps.setString(2, afiliacion.getCiAfiliado());
-            ps.setString(3, afiliacion.getDescripcion());
+            ps.setString(1, afiliacion.getIdAfiliacion());
+            ps.setString(2, afiliacion.getNombreAfiliacion());
+            ps.setString(3, afiliacion.getCiAfiliado());
+            ps.setString(4, afiliacion.getDescripcion());
             
             ps.executeUpdate();
             System.out.println("Afiliacion agregada correctamente");

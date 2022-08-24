@@ -72,7 +72,6 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
         jLabelUsuario = new javax.swing.JLabel();
         jLabelClave = new javax.swing.JLabel();
         botonAgregar = new javax.swing.JButton();
-        botonModificar = new javax.swing.JButton();
         botonBorrar = new javax.swing.JButton();
         botonVolver = new javax.swing.JButton();
         botonActualizar = new javax.swing.JButton();
@@ -124,8 +123,6 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
             }
         });
 
-        botonModificar.setText("Modificar");
-
         botonBorrar.setText("Borrar");
         botonBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,28 +149,18 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonModificar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelClave)
-                            .addComponent(jLabelUsuario))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(campoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoClave, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botonBorrar)
-                                .addGap(9, 9, 9))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(botonAgregar)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelClave)
+                    .addComponent(jLabelUsuario))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(campoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoClave, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,7 +186,6 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(4, 4, 4)
                 .addComponent(jLabelGestionUsuarios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -212,9 +198,7 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(botonAgregar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botonModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(35, 35, 35)
                         .addComponent(botonBorrar)))
                 .addGap(6, 6, 6)
                 .addComponent(botonActualizar)
@@ -233,8 +217,37 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_campoClaveActionPerformed
 
     private void botonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBorrarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonBorrarActionPerformed
+        try {
+            //Llamo a la fachada logica
+            
+            usuarioEscrito = campoUsuario.getText();
+            
+            Usuario nuevoObjetoUsuario = new Usuario();
+            nuevoObjetoUsuario.nombreDelUsuario = usuarioEscrito;
+            
+            System.out.println("Usuario escrito: " + usuarioEscrito);
+            
+            System.out.print("nuevoObjetoUsuario.nombreDelUsuario: ");
+            System.out.println(nuevoObjetoUsuario.nombreDelUsuario);            
+            
+            Boolean existe = FachadaLogica.existeUsuarioParaGestionar(nuevoObjetoUsuario);
+            if (existe) {
+                //Borro el usuario
+                System.out.println("El usuario escrito si existe");
+                FachadaLogica.bajaUsuario(nuevoObjetoUsuario);
+                JOptionPane.showMessageDialog(null, "Usuario borrado correctamente");
+
+            } else {
+                //No borro el usuario, porque no existe.
+                System.out.println("El usuario escrito no existe");
+                JOptionPane.showMessageDialog(null, "El usuario " + usuarioEscrito + " no puede ser borrado porque no existe.");
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(VentanaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally {
+            actualizarListaDeUsuarios();
+        }    }//GEN-LAST:event_botonBorrarActionPerformed
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
         try {
@@ -257,11 +270,11 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
             System.out.println(nuevoObjetoUsuario.claveDelUsuario);
             
             
-            Boolean existe = FachadaLogica.existeUsuario(nuevoObjetoUsuario);
+            Boolean existe = FachadaLogica.existeUsuarioParaGestionar(nuevoObjetoUsuario);
             if (existe) {
                 //No agrego el usuario, porque ya existe.
                 System.out.println("El usuario ya existe");
-                JOptionPane.showMessageDialog(null, "El Usuario " + usuarioEscrito + " ya existe.");
+                JOptionPane.showMessageDialog(null, "El usuario " + usuarioEscrito + " ya existe.");
             } else {
                 //Agrego el usuario
                 System.out.println("Usuario agregado correctamente");
@@ -272,7 +285,7 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
             Logger.getLogger(VentanaLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally {
-            
+            actualizarListaDeUsuarios();
         }
     }//GEN-LAST:event_botonAgregarActionPerformed
 
@@ -284,6 +297,11 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
         
+        actualizarListaDeUsuarios();
+    }//GEN-LAST:event_botonActualizarActionPerformed
+
+    
+    private void actualizarListaDeUsuarios(){
         try {
             
         // MOSTRAR USUARIOS EN LA TABLA USUARIOS           
@@ -302,10 +320,9 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
             tablaUsuarios.setModel(modelo);
         } catch (UsuarioException ex) {
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-           
         } 
-    }//GEN-LAST:event_botonActualizarActionPerformed
-
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -345,7 +362,6 @@ public class VentanaGestionUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonBorrar;
-    private javax.swing.JButton botonModificar;
     private javax.swing.JButton botonVolver;
     private javax.swing.JTextField campoClave;
     private javax.swing.JTextField campoUsuario;

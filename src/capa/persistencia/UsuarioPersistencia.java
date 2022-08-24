@@ -28,16 +28,16 @@ public class UsuarioPersistencia {
     // EN NETBEANS: NO REQUIERE USAR APÓSTROFE PARA REPRESENTAR LA COLUMNA: VA TODO PEGADO: nombreUsuario=?    ? ES REEMPLAZADO POR EL VALOR DE LA COLUMNA.
     private static final String PS_SELECT_USUARIO = "Select * from usuarios where nombreUsuario=? and claveUsuario=?";
     
-    private static final String PS_SELECT_USUARIO_ALTA = "Select * from usuarios where nombreUsuario=?";
-    // mal:  static final String PS_LOGIN = "mysql -u ? -p? -h localhost nombretemporal";
+    private static final String PS_SELECT_USUARIO_GESTION = "Select * from usuarios where nombreUsuario=?";
+    
+    // mal:  static final String PS_LOGIN = "mysql -u ? -p? -h localhost Biosearcher";
     // usar una tabla en la base de datos para disponer de usuarios para manejar el PROGRAMA.
     
     private static final String PS_INSERT_USUARIO = "INSERT INTO usuarios (nombreUsuario, claveUsuario) VALUES (?, ?)";
    
     private static final String PS_DELETE_USUARIO = "DELETE FROM usuarios WHERE (nombreUsuario = ?)";
-    //private static final String PS_UPDATE_USUARIO = "UPDATE grupo_centro.usuarios SET apellido = '?' WHERE (nombre = '?')";
-    //private static final String PS_INSERT_USUARIO = "INSERT INTO grupo_centro.usuarios (nombre, apellido,clave) VALUES (?, ?, ?)";
 
+    private static final String PS_UPDATE_USUARIO = "UPDATE usuarios SET nombreUsuario=?, claveUsuario=? WHERE (nombreUsuario = 'usuario4');";
 
     
     public Usuarios listaUsuarios() {
@@ -130,7 +130,7 @@ public class UsuarioPersistencia {
         try {
             Connection nuevoObjetoConexion = con.conectar();
 
-            ps = nuevoObjetoConexion.prepareStatement(PS_SELECT_USUARIO_ALTA);
+            ps = nuevoObjetoConexion.prepareStatement(PS_SELECT_USUARIO_GESTION);
             ps.setString(1,nuevoObjetoUsuario.getNombreDelUsuario());
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -165,8 +165,6 @@ public class UsuarioPersistencia {
         } catch (SQLException e) {
             //throw new UsuarioException("No pude agregar el usuario");
             System.out.println("error ");
-        } finally {
-
         }
     }
        
@@ -188,18 +186,30 @@ public class UsuarioPersistencia {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("error ");
+            System.out.println("No se pudo borrar el usuario ");
+        } 
+    }
+
+    public void modificacionUsuario(Usuario nuevoObjetoUsuario) throws PersistenciaException{
+        PreparedStatement ps = null;
+
+        Conexion nuevoObjetoConexion = new Conexion();
+        Connection con = null;
+        
+        try {
+            con = nuevoObjetoConexion.conectar();
+            ps = con.prepareStatement(PS_DELETE_USUARIO);
+            ps.setString(1,nuevoObjetoUsuario.getNombreDelUsuario());
+
+            System.out.println(ps);
+            
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("No se pudo borrar el usuario ");
         } finally {
 
         }
-    }
-
-    public void modificacionUsuario(Usuario nuevoObjetoUsuario) {
-
-        //paso 1 : crear la conexion a la base
-        //paso 2 : crear el prepare statement
-        //paso 3 : ejecutar la consulta del preparestatement
-        //paso 5 : cerrar la conexion a la base
     }
 
 }

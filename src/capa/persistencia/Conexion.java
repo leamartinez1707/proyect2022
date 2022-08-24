@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 
 // JDBC  CONNECTOR:
-// jdbc:mysql://localhost:3306/nombretemporal?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC [root on Default schema]
+
 public class Conexion {
     String usuario = "root";
     String contrasena = "password";
@@ -45,7 +45,7 @@ public class Conexion {
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombretemporal?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", usuario, contrasena);
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Biosearcher?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", usuario, contrasena);
             
         } catch (SQLException ex) {
             throw new PersistenciaException("Fallo en BD ");
@@ -66,7 +66,7 @@ public class Conexion {
     public Connection desconectar(){
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/nombretemporal?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", usuario, contrasena);
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Biosearcher?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", usuario, contrasena);
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);

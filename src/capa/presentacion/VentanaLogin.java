@@ -39,7 +39,7 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Login Proyecto 2022");
+        setTitle("Login Proyecto 2022 - Biosearcher");
 
     }
 
@@ -62,6 +62,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         botonCancelar = new javax.swing.JButton();
         botonConectar = new javax.swing.JButton();
         botonRegistrarse = new javax.swing.JButton();
+        jLabelTitulo1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -78,20 +79,20 @@ public class VentanaLogin extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/bioslog2.jpg"))); // NOI18N
-        jPanel1.add(jLabelImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 450, 310));
+        jPanel1.add(jLabelImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 450, 310));
 
         jLabelTitulo.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
-        jLabelTitulo.setText("Proyecto Java 2022");
-        jPanel1.add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 230, 30));
+        jLabelTitulo.setText("Biosearcher");
+        jPanel1.add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 170, 30));
 
         jLabelUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelUsuario.setText("Usuario:");
         jLabelUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 80, 40));
+        jPanel1.add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 80, 40));
 
         jLabelContrasena.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelContrasena.setText("Contraseña: ");
-        jPanel1.add(jLabelContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 90, 40));
+        jPanel1.add(jLabelContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, 90, 40));
 
         campoUsuario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         campoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -100,10 +101,10 @@ public class VentanaLogin extends javax.swing.JFrame {
                 campoUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(campoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 90, -1));
+        jPanel1.add(campoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, 90, -1));
 
         campoClave.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel1.add(campoClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 410, 90, -1));
+        jPanel1.add(campoClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 90, -1));
 
         botonCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botonCancelar.setText("Cancelar");
@@ -117,7 +118,7 @@ public class VentanaLogin extends javax.swing.JFrame {
                 botonCancelarKeyPressed(evt);
             }
         });
-        jPanel1.add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 380, 110, 40));
+        jPanel1.add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 390, 110, 40));
 
         botonConectar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botonConectar.setText("Conectar");
@@ -131,7 +132,7 @@ public class VentanaLogin extends javax.swing.JFrame {
                 botonConectarKeyPressed(evt);
             }
         });
-        jPanel1.add(botonConectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 380, 100, 40));
+        jPanel1.add(botonConectar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 100, 40));
 
         botonRegistrarse.setText("REGISTRARSE");
         botonRegistrarse.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +145,11 @@ public class VentanaLogin extends javax.swing.JFrame {
                 botonRegistrarseKeyPressed(evt);
             }
         });
-        jPanel1.add(botonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, 110, 30));
+        jPanel1.add(botonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 440, 110, 30));
+
+        jLabelTitulo1.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
+        jLabelTitulo1.setText("Proyecto Java 2022");
+        jPanel1.add(jLabelTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 230, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 480));
 
@@ -273,6 +278,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelContrasena;
     private javax.swing.JLabel jLabelImagen;
     private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLabel jLabelTitulo1;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

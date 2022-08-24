@@ -7,12 +7,15 @@ import capa.logica.Persona;
 import capa.logica.Personas;
 import capa.logica.Afiliacion;
 import capa.logica.Afiliaciones;
+import capa.persistencia.AfiliacionPersistencia;
 import excepciones.AfiliacionException;
 import excepciones.NegocioException;
 import excepciones.PersonaException;
 import excepciones.TiposDeNegocioException;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -24,6 +27,16 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
+    
+    
+    public void limpiarAfiliacion(){
+        
+        txtNombreAfiliacion.setText("");
+        txtCedulaAfiliacion.setText("");
+        txtDescripcionAfiliacion.setText("");
+        txtIdAfiliacion.setText("");
+        
+    }
     public void limpiarAfiliado() {
 
         txtCedulaIdentidad.setText("");
@@ -128,7 +141,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("PROYECTO BIOS 2022 - JAVA ");
+        setTitle("PROYECTO BIOS 2022 - JAVA - BIOSEARCHER ");
         setResizable(false);
 
         // MUESTRA TODAS LAS PERSONAS EN LA TABLA        
@@ -199,6 +212,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnEliminarAfiliaciones = new javax.swing.JButton();
         btnLimpiarCeldasAfiliaciones = new javax.swing.JButton();
         tituloRellenar1 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        txtIdAfiliacion = new javax.swing.JTextField();
+        botonActAfiliaciones = new javax.swing.JButton();
         panelNegocios = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaNegocios = new javax.swing.JTable();
@@ -271,11 +287,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelPestañas.setBackground(new java.awt.Color(255, 255, 255));
         panelPestañas.setMinimumSize(new java.awt.Dimension(800, 600));
 
-        panelAfiliados.setBackground(new java.awt.Color(204, 204, 204));
+        panelAfiliados.setBackground(new java.awt.Color(204, 255, 255));
         panelAfiliados.setMinimumSize(new java.awt.Dimension(1024, 768));
         panelAfiliados.setPreferredSize(new java.awt.Dimension(1024, 768));
         panelAfiliados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tablaPersona.setBackground(new java.awt.Color(255, 255, 204));
         tablaPersona.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -310,7 +327,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnAgregarAfiliado.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregarAfiliado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnAgregarAfiliado.setText("INGRESAR");
-        btnAgregarAfiliado.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnAgregarAfiliado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnAgregarAfiliado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarAfiliadoActionPerformed(evt);
@@ -326,7 +343,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnModificarAfiliado.setBackground(new java.awt.Color(255, 255, 255));
         btnModificarAfiliado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnModificarAfiliado.setText("MODIFICAR");
-        btnModificarAfiliado.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnModificarAfiliado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnModificarAfiliado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarAfiliadoActionPerformed(evt);
@@ -342,7 +359,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnEliminarAfiliado.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminarAfiliado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnEliminarAfiliado.setText("ELIMINAR");
-        btnEliminarAfiliado.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnEliminarAfiliado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnEliminarAfiliado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarAfiliadoActionPerformed(evt);
@@ -353,12 +370,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 btnEliminarAfiliadoKeyPressed(evt);
             }
         });
-        panelAfiliados.add(btnEliminarAfiliado, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 390, -1, 20));
+        panelAfiliados.add(btnEliminarAfiliado, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 390, 110, 20));
 
         btnLimpiarCeldas.setBackground(new java.awt.Color(255, 255, 255));
         btnLimpiarCeldas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnLimpiarCeldas.setText("LIMPIAR");
-        btnLimpiarCeldas.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnLimpiarCeldas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnLimpiarCeldas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarCeldasActionPerformed(evt);
@@ -371,9 +388,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         panelAfiliados.add(btnLimpiarCeldas, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 390, 100, 20));
 
+        txtCedulaIdentidad.setBackground(new java.awt.Color(255, 255, 204));
         txtCedulaIdentidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtCedulaIdentidad.setForeground(new java.awt.Color(153, 153, 153));
-        txtCedulaIdentidad.setBorder(null);
+        txtCedulaIdentidad.setText("ASDADAS");
+        txtCedulaIdentidad.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtCedulaIdentidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtCedulaIdentidadMouseClicked(evt);
@@ -387,11 +405,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtCedulaIdentidadActionPerformed(evt);
             }
         });
-        panelAfiliados.add(txtCedulaIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, 170, -1));
+        panelAfiliados.add(txtCedulaIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, 170, 20));
 
+        txtNombre.setBackground(new java.awt.Color(255, 255, 204));
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(153, 153, 153));
-        txtNombre.setBorder(null);
+        txtNombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtNombre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtNombreMouseClicked(evt);
@@ -400,11 +419,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtNombreMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 170, -1));
+        panelAfiliados.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 170, 20));
 
+        txtNacionalidad.setBackground(new java.awt.Color(255, 255, 204));
         txtNacionalidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNacionalidad.setForeground(new java.awt.Color(153, 153, 153));
-        txtNacionalidad.setBorder(null);
+        txtNacionalidad.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtNacionalidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtNacionalidadMouseClicked(evt);
@@ -413,11 +433,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtNacionalidadMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 170, -1));
+        panelAfiliados.add(txtNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 170, 20));
 
+        txtDireccion.setBackground(new java.awt.Color(255, 255, 204));
         txtDireccion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtDireccion.setForeground(new java.awt.Color(153, 153, 153));
-        txtDireccion.setBorder(null);
+        txtDireccion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtDireccion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtDireccionMouseClicked(evt);
@@ -431,11 +452,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtDireccionActionPerformed(evt);
             }
         });
-        panelAfiliados.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 170, -1));
+        panelAfiliados.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 170, 20));
 
+        txtTelefono.setBackground(new java.awt.Color(255, 255, 204));
         txtTelefono.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(153, 153, 153));
-        txtTelefono.setBorder(null);
+        txtTelefono.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtTelefonoMouseClicked(evt);
@@ -444,11 +466,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtTelefonoMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 280, 170, -1));
+        panelAfiliados.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 280, 170, 20));
 
+        txtEmail.setBackground(new java.awt.Color(255, 255, 204));
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(153, 153, 153));
-        txtEmail.setBorder(null);
+        txtEmail.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtEmail.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtEmailMouseClicked(evt);
@@ -457,8 +480,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtEmailMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, 170, -1));
+        panelAfiliados.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, 170, 20));
 
+        txtFechaNacimiento.setBackground(new java.awt.Color(255, 255, 204));
         txtFechaNacimiento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtFechaNacimiento.setForeground(new java.awt.Color(153, 153, 153));
         txtFechaNacimiento.setText("1999-12-31");
@@ -471,33 +495,33 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtFechaNacimientoMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 170, -1));
+        panelAfiliados.add(txtFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 170, 20));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel2.setText("CEDULA DE IDENTIDAD");
         panelAfiliados.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel3.setText("APELLIDO");
         panelAfiliados.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 190, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel4.setText("NACIONALIDAD");
         panelAfiliados.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel5.setText("DIRECCION");
         panelAfiliados.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel6.setText("TELEFONO");
         panelAfiliados.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 280, -1, -1));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel7.setText("EMAIL");
         panelAfiliados.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel8.setText("FECHA DE NACIMIENTO");
         panelAfiliados.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, -1, -1));
 
@@ -505,6 +529,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelAfiliados.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 340, 80, 20));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 0, 0));
         jLabel10.setText("ABM Afiliados");
         panelAfiliados.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 130, 40));
 
@@ -520,11 +545,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         panelAfiliados.add(botonActPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 460, -1, -1));
 
-        tituloRellenar.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        tituloRellenar.setFont(new java.awt.Font("Monotype Corsiva", 2, 24)); // NOI18N
+        tituloRellenar.setForeground(new java.awt.Color(51, 51, 51));
         tituloRellenar.setText("Rellene todos los campos: ");
-        panelAfiliados.add(tituloRellenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 180, 30));
+        panelAfiliados.add(tituloRellenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 220, 20));
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel14.setText("NOMBRE");
         panelAfiliados.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, -1, -1));
 
@@ -532,9 +558,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnAgregarAfiliacion.setText("Agregar afiliación");
         panelAfiliados.add(btnAgregarAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 430, -1, -1));
 
+        txtApellido.setBackground(new java.awt.Color(255, 255, 204));
         txtApellido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtApellido.setForeground(new java.awt.Color(153, 153, 153));
-        txtApellido.setBorder(null);
+        txtApellido.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtApellido.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtApellidoMouseClicked(evt);
@@ -543,7 +570,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtApellidoMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 190, 170, -1));
+        panelAfiliados.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 190, 170, 20));
 
         panelPestañas.addTab("Afiliados", panelAfiliados);
 
@@ -658,6 +685,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         tituloRellenar1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         tituloRellenar1.setText("Rellene todos los campos: ");
         panelAfiliaciones.add(tituloRellenar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 180, 30));
+
+        jLabel33.setText("ID AFILIACION");
+        panelAfiliaciones.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, -1, 20));
+        panelAfiliaciones.add(txtIdAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 100, 100, -1));
+
+        botonActAfiliaciones.setText("Actualizar");
+        botonActAfiliaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActAfiliacionesActionPerformed(evt);
+            }
+        });
+        panelAfiliaciones.add(botonActAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 410, -1, -1));
 
         panelPestañas.addTab("Afiliaciones", panelAfiliaciones);
 
@@ -973,6 +1012,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnCuota.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCuota.setText("Cuota");
         btnCuota.setBorder(null);
+        btnCuota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCuotaActionPerformed(evt);
+            }
+        });
         panelPagos.add(btnCuota, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 290, 120, 30));
 
         btnMatricula.setBackground(new java.awt.Color(204, 204, 204));
@@ -980,6 +1024,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnMatricula.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnMatricula.setText("Matricula");
         btnMatricula.setBorder(null);
+        btnMatricula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMatriculaActionPerformed(evt);
+            }
+        });
         panelPagos.add(btnMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 260, 120, 30));
 
         btnAgregarAfiliado1.setBackground(new java.awt.Color(255, 255, 255));
@@ -1344,11 +1393,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarAfiliacionesActionPerformed
 
     private void btnEliminarAfiliacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAfiliacionesActionPerformed
-        // TODO add your handling code here:
+        try {
+            Afiliacion afiliacion = new Afiliacion();
+
+            //String cedulaDeIdentidad = txtCedulaIdentidad.getText();
+            // La variable CEDULA obtiene valor del dato clickeado en la columna.
+            String idAfiliacion = tablaAfiliaciones.getValueAt(tablaAfiliaciones.getSelectedRow(), 0).toString();
+
+            // Setea el dato que fue clickeado y se lo agrega a la persona creada.
+            afiliacion.setIdAfiliacion(idAfiliacion);
+
+            // Ejecuta el método eliminar persona.
+            FachadaLogica.eliminarAfiliacion(afiliacion);
+            JOptionPane.showMessageDialog(null, "Persona eliminada correctamente");
+            mostrarPersonasTabla();
+
+            mostrarAfiliacionesTabla();
+        } catch (AfiliacionException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnEliminarAfiliacionesActionPerformed
 
     private void btnLimpiarCeldasAfiliacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCeldasAfiliacionesActionPerformed
-        // TODO add your handling code here:
+        limpiarAfiliacion();
     }//GEN-LAST:event_btnLimpiarCeldasAfiliacionesActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -1427,8 +1495,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarNegocioActionPerformed
 
     private void btnModificarAfiliacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarAfiliacionesActionPerformed
-        // TODO add your handling code here:
+        
+            Afiliacion afiliacion = new Afiliacion();
+            
+        try{
+            
+            String nombreAfiliacion = txtNombreAfiliacion.getText();
+            String ciAfiliado = txtCedulaAfiliacion.getText();
+            String descripcion = txtDescripcionAfiliacion.getText();
+            String idAfiliacion = txtIdAfiliacion.getText();
+            
+            
+            afiliacion.setNombreAfiliacion(nombreAfiliacion);
+            afiliacion.setCiAfiliado(ciAfiliado);
+            afiliacion.setDescripcion(descripcion);
+            afiliacion.setIdAfiliacion(idAfiliacion);
+            
+            FachadaLogica.modificarAfiliacion(afiliacion);
+            JOptionPane.showMessageDialog(null, "Se modificó la afiliación correctamente");
+            mostrarAfiliacionesTabla();
+            
+        }catch (AfiliacionException e){
+         JOptionPane.showMessageDialog(null, "No se pudo modificar la afiliación");
+            
+        }
     }//GEN-LAST:event_btnModificarAfiliacionesActionPerformed
+
+    private void btnMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatriculaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMatriculaActionPerformed
+
+    private void btnCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuotaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCuotaActionPerformed
+
+    private void botonActAfiliacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActAfiliacionesActionPerformed
+        mostrarAfiliacionesTabla();
+    }//GEN-LAST:event_botonActAfiliacionesActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1464,6 +1567,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
+    private javax.swing.JButton botonActAfiliaciones;
     private javax.swing.JButton botonActPersona;
     private javax.swing.JButton botonActualizarNeg;
     private javax.swing.JButton btnAgregarAfiliacion;
@@ -1517,6 +1621,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1560,6 +1665,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txtDireccionLocal;
     public javax.swing.JTextField txtEmail;
     public javax.swing.JTextField txtFechaNacimiento;
+    private javax.swing.JTextField txtIdAfiliacion;
     public javax.swing.JTextField txtIdAfiliado;
     private javax.swing.JTextField txtIdNegocioLocal;
     private javax.swing.JTextField txtIdNegocioMod;
