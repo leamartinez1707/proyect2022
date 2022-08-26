@@ -10,9 +10,13 @@ import capa.persistencia.NegocioPersistencia;
 import capa.persistencia.UsuarioPersistencia;
 import capa.persistencia.PersonaPersistencia;
 import capa.persistencia.AfiliacionPersistencia;
+import capa.persistencia.LocalPersistencia;
+import capa.persistencia.PagoPersistencia;
 import capa.presentacion.VentanaPrincipal;
 import excepciones.AfiliacionException;
+import excepciones.LocalException;
 import excepciones.NegocioException;
+import excepciones.PagoException;
 import excepciones.PersistenciaException;
 import excepciones.PersonaException;
 import excepciones.TiposDeNegocioException;
@@ -155,116 +159,67 @@ public class FachadaLogica {
         AfiliacionPersistencia eaf = new AfiliacionPersistencia();
         eaf.eliminarAfiliacion(afiliacion);
     }
+    
+    //////////////////////////////////////////
+    // ABM LOCALES
+    public static Locales listarLocales() throws LocalException {
+        LocalPersistencia lp = new LocalPersistencia();
+
+        Locales mostrarLocales = lp.listarLocales();
+
+        return mostrarLocales;
+
+    }
+
+    public static void agregarLocal(Local local) throws LocalException {
+
+        LocalPersistencia lp = new LocalPersistencia();
+        lp.agregarLocal(local);
+
+    }
+
+    public static void modificarLocal(Local local) throws LocalException {
+
+        LocalPersistencia lp = new LocalPersistencia();
+        lp.modificarLocal(local);
+    }
+
+    public static void eliminarLocal(Local local) throws LocalException {
+
+        LocalPersistencia lp = new LocalPersistencia();
+        lp.eliminarLocal(local);
+    }
+    
+    
+    //////////////////////////////////////////
+    // ABM PAGOS
+    
+    public static Pagos listarPagos() throws PagoException {
+        PagoPersistencia pp = new PagoPersistencia();
+
+        Pagos mostrarPagos = pp.listarPagos();
+
+        return mostrarPagos;
+
+    }
+
+    public static void agregarPago(Pago pago) throws PagoException {
+
+        PagoPersistencia pp = new PagoPersistencia();
+        pp.agregarPago(pago);
+
+    }
+
+    public static void modificarPago(Pago pago) throws PagoException {
+
+        PagoPersistencia pp = new PagoPersistencia();
+        pp.modificarPago(pago);
+    }
+
+    public static void eliminarPago(Pago pago) throws PagoException {
+
+        PagoPersistencia pp = new PagoPersistencia();
+        pp.eliminarPago(pago);
+    }
 }
 
-/* public static String[] buscarPersona() throws PersistenciaException, SQLException, PersonaException
-    {
-        
-    }
-    /*
-    /* private Persona mod;
-    private PersonaPersistencia modP;
-    private pruebaPrincipal prueba;
-    
-    public FachadaLogica(Persona mod, PersonaPersistencia modP, pruebaPrincipal prueba)
-    {
-        this.mod = mod;
-        this.modP = modP;
-        this.prueba = prueba;
-        this.prueba.btnGuardar.addActionListener(this);
-        this.prueba.btnModificar.addActionListener(this);
-        this.prueba.btnBorrar.addActionListener(this);
-        this.prueba.btnLimpiar.addActionListener(this);
-        this.prueba.btnBuscar.addActionListener(this);
-    }
-        
-        public void iniciar()
-        {
-            prueba.setTitle("Personas");
-            prueba.setLocationRelativeTo(null);
-            prueba.txtId.setVisible(false);
-        }
-        
-        /*
-        public void actionPerfomed(ActionEvent e) throws SQLException, PersistenciaException
-          
-        {
-            // Segun el boton que presione el usuario, ejecuta una accion para ingresar, guardar etc una Persona
-            if(e.getSource()== prueba.btnGuardar){  
-                
-                mod.setCedulaDeIdentidad(prueba.txtCedula.getText());
-                mod.setNombre(prueba.txtNombre.getText());
-                mod.setNacionalidad(prueba.txtNacionalidad.getText());
-                mod.setDireccion(prueba.txtDireccion.getText());
-                mod.setTelefono(prueba.txtTelefono.getText());
-                mod.setEmail(prueba.txtEmail.getText());
-                mod.setFechaDeNacimiento(prueba.txtNacimiento.getText());
-                
-                if(modP.ingresarPersona(mod)){
-                    JOptionPane.showMessageDialog(null, "Registro guardado exítosamente");
-                    borrar();
-                } else{
-                    JOptionPane.showMessageDialog(null, "Error al registrar la persona");
-                    borrar();
-                }
-            }
-            
-            if(e.getSource()== prueba.btnModificar){  
-                
-                mod.setCedulaDeIdentidad(prueba.txtCedula.getText());
-                mod.setNombre(prueba.txtNombre.getText());
-                mod.setNacionalidad(prueba.txtNacionalidad.getText());
-                mod.setDireccion(prueba.txtDireccion.getText());
-                mod.setTelefono(prueba.txtTelefono.getText());
-                mod.setEmail(prueba.txtEmail.getText());
-                mod.setFechaDeNacimiento(prueba.txtNacimiento.getText());
-                
-                if(modP.modificarPersona(mod)){
-                    JOptionPane.showMessageDialog(null, "Registro modificado exítosamente");
-                    borrar();
-                } else{
-                    JOptionPane.showMessageDialog(null, "Error al modificar la persona");
-                    borrar();
-                }
-            }
-           
-            if(e.getSource()== prueba.btnBorrar){  
-                
-                mod.setCedulaDeIdentidad(prueba.txtCedula.getText());
-                
-                if(modP.eliminarPersona(mod)){
-                    JOptionPane.showMessageDialog(null, "Persona borrada exítosamente");
-                    borrar();
-                } else{
-                    JOptionPane.showMessageDialog(null, "Error al eliminar la persona");
-                    borrar();
-                }
-            }
-            
-            if(e.getSource()== prueba.btnBuscar){  
-                
-                mod.setCedulaDeIdentidad(prueba.txtCedula.getText());
-                
-                if(modP.buscarPersona(mod))
-                {
-                    prueba.txtCedula.setText(mod.getCedulaDeIdentidad());
-                    prueba.txtNombre.setText(mod.getNombre());
-                    prueba.txtNacionalidad.setText(mod.getNacionalidad());
-                    prueba.txtDireccion.setText(mod.getDireccion());
-                    prueba.txtTelefono.setText(mod.getTelefono());
-                    prueba.txtEmail.setText(mod.getEmail());
-                    prueba.txtNacimiento.setText(mod.getFechaDeNacimiento());
-                    
-                    
-                } 
-                else{
-                    JOptionPane.showMessageDialog(null, "No se encontró la persona buscada");
-                }
-            }
-            
-                if(e.getSource()== prueba.btnLimpiar){
-                    borrar();
-                }
-            
-        }
- */

@@ -7,15 +7,23 @@ import capa.logica.Persona;
 import capa.logica.Personas;
 import capa.logica.Afiliacion;
 import capa.logica.Afiliaciones;
+import capa.logica.Local;
+import capa.logica.Locales;
+import capa.logica.Pago;
+import capa.logica.Pagos;
 import capa.persistencia.AfiliacionPersistencia;
 import excepciones.AfiliacionException;
+import excepciones.LocalException;
 import excepciones.NegocioException;
+import excepciones.PagoException;
 import excepciones.PersonaException;
 import excepciones.TiposDeNegocioException;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -48,7 +56,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtEmail.setText("");
         txtFechaNacimiento.setText("");
     }
+    
+    public void limpiarNegocios() {
 
+        txtIdNegocioMod.setText("");
+        txtRubro.setText("");
+        txtIdAfiliado.setText("");
+        txtNombreNegocio.setText("");
+        txtDescripcion.setText("");
+    }
+
+    public void limpiarLocales() {
+
+        txtIdNegocioLocal.setText("");
+        txtDireccionLocal.setText("");
+        txtNombreEncargado.setText("");
+        txtApellidoEncargado.setText("");
+        txtCedulaEncargadoLocal.setText("");
+    }
+    
+    public void limpiarPagos() {
+
+        txtIdCiPagos.setText("");
+        txtIdMonto.setText("");
+    }
+    
     public final void mostrarPersonasTabla() {
 
         try {
@@ -135,8 +167,75 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }catch (AfiliacionException ex) {
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
     }
 
+    public final void mostrarLocalesTabla(){
+        
+        try {
+
+            // MOSTRAR AFILIADOS EN LA TABLA
+            
+            Locales locales = FachadaLogica.listarLocales();
+            Object[] bLocales = new Object[6];
+            DefaultTableModel modeloLoc = (DefaultTableModel) tablaLocales.getModel();
+            modeloLoc.setRowCount(0);
+            
+            for (int i = 0; i < locales.getLocales().size(); i++) {
+
+                Local local = locales.getLocales().get(i);
+
+                bLocales[0] = local.getIdLocal();
+                bLocales[1] = local.getIdNegocio();
+                bLocales[2] = local.getDireccionLocal();
+                bLocales[3] = local.getNombreEncargado();
+                bLocales[4] = local.getApellidoEncargado();
+                bLocales[5] = local.getCiEncargado();
+                
+                modeloLoc.addRow(bLocales);
+
+            }
+            tablaAfiliaciones.setModel(modeloLoc);
+            
+           
+        }catch (LocalException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public final void mostrarPagosTabla(){
+        
+        try {
+
+            // MOSTRAR AFILIADOS EN LA TABLA
+            
+            Pagos pagos = FachadaLogica.listarPagos();
+            Object[] bPagos = new Object[6];
+            DefaultTableModel modeloLoc = (DefaultTableModel) tablaPagos.getModel();
+            modeloLoc.setRowCount(0);
+            
+            for (int i = 0; i < pagos.getPagos().size(); i++) {
+
+                Pago pago = pagos.getPagos().get(i);
+
+                bPagos[0] = pago.getIdPago();
+                bPagos[1] = pago.getCi();
+                bPagos[2] = pago.getFechaDePago();
+                bPagos[3] = pago.getTipoDePago();
+                bPagos[4] = pago.getMonto();
+                
+                modeloLoc.addRow(bPagos);
+
+            }
+            tablaPagos.setModel(modeloLoc);
+            
+           
+        }catch (PagoException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public VentanaPrincipal() {
 
         initComponents();
@@ -154,7 +253,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         // MOSTRAR AFILIACIONES
         mostrarAfiliacionesTabla();
-        // FINALIZA MOSTRAR AFILIACIONES   
+        // FINALIZA MOSTRAR AFILIACIONES 
+        
+        // MOSTRAR LOCALES
+        mostrarLocalesTabla();
+        // FINALIZA MOSTRAR LOCALES
+        
+        // MOSTRAR PAGOS
+        mostrarPagosTabla();
+        // FINALIZA MOSTRAR PAGOS  
 
     }
 
@@ -190,7 +297,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
-        botonActPersona = new javax.swing.JButton();
+        botonActualizarPersonas = new javax.swing.JButton();
         tituloRellenar = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         btnAgregarAfiliacion = new javax.swing.JButton();
@@ -214,7 +321,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         tituloRellenar1 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         txtIdAfiliacion = new javax.swing.JTextField();
-        botonActAfiliaciones = new javax.swing.JButton();
+        botonActualizarAfiliaciones = new javax.swing.JButton();
         panelNegocios = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaNegocios = new javax.swing.JTable();
@@ -227,7 +334,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnEliminarNegocio = new javax.swing.JButton();
         btnLimpiarCeldasNeg = new javax.swing.JButton();
         txtNombreNegocio = new javax.swing.JTextField();
-        botonActualizarNeg = new javax.swing.JButton();
+        botonActualizarNegocios = new javax.swing.JButton();
         txtDescripcion = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -256,22 +363,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnEliminarLocal = new javax.swing.JButton();
         btnLimpiarCeldasLoc = new javax.swing.JButton();
         btnBuscarLocal = new javax.swing.JButton();
+        botonActualizarLocales = new javax.swing.JButton();
         panelPagos = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaPagos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtIdCiPagos = new javax.swing.JTextField();
+        txtIdMonto = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
-        btnCuota = new javax.swing.JRadioButton();
-        btnMatricula = new javax.swing.JRadioButton();
-        btnAgregarAfiliado1 = new javax.swing.JButton();
+        btnAgregarPago = new javax.swing.JButton();
         btnModificarAfiliado1 = new javax.swing.JButton();
-        btnEliminarAfiliado1 = new javax.swing.JButton();
+        btnEliminarPago = new javax.swing.JButton();
+        botonActualizarPagos = new javax.swing.JButton();
+        btnLimpiarCeldasPago = new javax.swing.JButton();
+        jComboBoxTipoDePago = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -537,13 +646,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelAfiliados.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 210, 10));
         panelAfiliados.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, -1, -1));
 
-        botonActPersona.setText("Actualizar");
-        botonActPersona.addActionListener(new java.awt.event.ActionListener() {
+        botonActualizarPersonas.setText("Actualizar");
+        botonActualizarPersonas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonActPersonaActionPerformed(evt);
+                botonActualizarPersonasActionPerformed(evt);
             }
         });
-        panelAfiliados.add(botonActPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 460, -1, -1));
+        panelAfiliados.add(botonActualizarPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 460, -1, -1));
 
         tituloRellenar.setFont(new java.awt.Font("Monotype Corsiva", 2, 24)); // NOI18N
         tituloRellenar.setForeground(new java.awt.Color(51, 51, 51));
@@ -556,6 +665,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         btnAgregarAfiliacion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAgregarAfiliacion.setText("Agregar afiliación");
+        btnAgregarAfiliacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarAfiliacionActionPerformed(evt);
+            }
+        });
         panelAfiliados.add(btnAgregarAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 430, -1, -1));
 
         txtApellido.setBackground(new java.awt.Color(255, 255, 204));
@@ -613,7 +727,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel16.setText("NOMBRE AFILIACION");
-        panelAfiliaciones.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, -1, -1));
+        panelAfiliaciones.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel17.setText("C.I AFILIADO");
@@ -624,11 +738,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelAfiliaciones.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, -1, -1));
 
         jButton1.setText("Ingresar Pago");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         panelAfiliaciones.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 190, -1, -1));
 
         txtNombreAfiliacion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtNombreAfiliacion.setBorder(null);
-        panelAfiliaciones.add(txtNombreAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 230, 20));
+        panelAfiliaciones.add(txtNombreAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 180, 230, 20));
 
         txtCedulaAfiliacion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtCedulaAfiliacion.setBorder(null);
@@ -684,19 +803,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         tituloRellenar1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         tituloRellenar1.setText("Rellene todos los campos: ");
-        panelAfiliaciones.add(tituloRellenar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 180, 30));
+        panelAfiliaciones.add(tituloRellenar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 180, 30));
 
         jLabel33.setText("ID AFILIACION");
-        panelAfiliaciones.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 100, -1, 20));
-        panelAfiliaciones.add(txtIdAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 100, 100, -1));
+        panelAfiliaciones.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, -1, 20));
+        panelAfiliaciones.add(txtIdAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 230, -1));
 
-        botonActAfiliaciones.setText("Actualizar");
-        botonActAfiliaciones.addActionListener(new java.awt.event.ActionListener() {
+        botonActualizarAfiliaciones.setText("Actualizar");
+        botonActualizarAfiliaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonActAfiliacionesActionPerformed(evt);
+                botonActualizarAfiliacionesActionPerformed(evt);
             }
         });
-        panelAfiliaciones.add(botonActAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 410, -1, -1));
+        panelAfiliaciones.add(botonActualizarAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 410, -1, -1));
 
         panelPestañas.addTab("Afiliaciones", panelAfiliaciones);
 
@@ -793,13 +912,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtNombreNegocio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         panelNegocios.add(txtNombreNegocio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, 300, 20));
 
-        botonActualizarNeg.setText("Actualizar");
-        botonActualizarNeg.addActionListener(new java.awt.event.ActionListener() {
+        botonActualizarNegocios.setText("Actualizar");
+        botonActualizarNegocios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonActualizarNegActionPerformed(evt);
+                botonActualizarNegociosActionPerformed(evt);
             }
         });
-        panelNegocios.add(botonActualizarNeg, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 500, 90, -1));
+        panelNegocios.add(botonActualizarNegocios, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 500, 90, -1));
 
         txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         panelNegocios.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, 300, 100));
@@ -913,6 +1032,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnModificarLocal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnModificarLocal.setText("MODIFICAR");
         btnModificarLocal.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnModificarLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarLocalActionPerformed(evt);
+            }
+        });
         panelLocales.add(btnModificarLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 450, 120, 20));
 
         btnEliminarLocal.setBackground(new java.awt.Color(255, 255, 255));
@@ -941,6 +1065,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnBuscarLocal.setText("BUSCAR");
         panelLocales.add(btnBuscarLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 167, 80, -1));
 
+        botonActualizarLocales.setText("Actualizar");
+        botonActualizarLocales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualizarLocalesActionPerformed(evt);
+            }
+        });
+        panelLocales.add(botonActualizarLocales, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 380, 90, -1));
+
         panelPestañas.addTab("Locales", panelLocales);
 
         panelPagos.setBackground(new java.awt.Color(204, 204, 204));
@@ -953,7 +1085,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
         panelPagos.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 210, 10));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaPagos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -976,7 +1108,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable1);
+        jScrollPane4.setViewportView(tablaPagos);
 
         panelPagos.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 390, -1));
 
@@ -992,60 +1124,36 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel23.setText("MONTO A DEPÓSITAR");
         panelPagos.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 350, -1, -1));
 
-        jTextField1.setBorder(null);
-        panelPagos.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 210, 120, 20));
+        txtIdCiPagos.setBorder(null);
+        panelPagos.add(txtIdCiPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 210, 120, 20));
 
-        jTextField3.setBorder(null);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtIdMonto.setBorder(null);
+        txtIdMonto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtIdMontoActionPerformed(evt);
             }
         });
-        panelPagos.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 350, 120, 20));
+        panelPagos.add(txtIdMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 350, 120, 20));
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setText("$U");
         panelPagos.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 340, 30, 40));
 
-        btnCuota.setBackground(new java.awt.Color(204, 204, 204));
-        btnGrupoPagos.add(btnCuota);
-        btnCuota.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnCuota.setText("Cuota");
-        btnCuota.setBorder(null);
-        btnCuota.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarPago.setBackground(new java.awt.Color(255, 255, 255));
+        btnAgregarPago.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnAgregarPago.setText("DEPÓSITAR");
+        btnAgregarPago.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnAgregarPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCuotaActionPerformed(evt);
+                btnAgregarPagoActionPerformed(evt);
             }
         });
-        panelPagos.add(btnCuota, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 290, 120, 30));
-
-        btnMatricula.setBackground(new java.awt.Color(204, 204, 204));
-        btnGrupoPagos.add(btnMatricula);
-        btnMatricula.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btnMatricula.setText("Matricula");
-        btnMatricula.setBorder(null);
-        btnMatricula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMatriculaActionPerformed(evt);
-            }
-        });
-        panelPagos.add(btnMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 260, 120, 30));
-
-        btnAgregarAfiliado1.setBackground(new java.awt.Color(255, 255, 255));
-        btnAgregarAfiliado1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnAgregarAfiliado1.setText("DEPÓSITAR");
-        btnAgregarAfiliado1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        btnAgregarAfiliado1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarAfiliado1ActionPerformed(evt);
-            }
-        });
-        btnAgregarAfiliado1.addKeyListener(new java.awt.event.KeyAdapter() {
+        btnAgregarPago.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnAgregarAfiliado1KeyPressed(evt);
+                btnAgregarPagoKeyPressed(evt);
             }
         });
-        panelPagos.add(btnAgregarAfiliado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 120, 20));
+        panelPagos.add(btnAgregarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 120, 20));
 
         btnModificarAfiliado1.setBackground(new java.awt.Color(255, 255, 255));
         btnModificarAfiliado1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1063,21 +1171,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         panelPagos.add(btnModificarAfiliado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 430, 120, 20));
 
-        btnEliminarAfiliado1.setBackground(new java.awt.Color(255, 255, 255));
-        btnEliminarAfiliado1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnEliminarAfiliado1.setText("ELIMINAR");
-        btnEliminarAfiliado1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        btnEliminarAfiliado1.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarPago.setBackground(new java.awt.Color(255, 255, 255));
+        btnEliminarPago.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnEliminarPago.setText("ELIMINAR");
+        btnEliminarPago.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnEliminarPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarAfiliado1ActionPerformed(evt);
+                btnEliminarPagoActionPerformed(evt);
             }
         });
-        btnEliminarAfiliado1.addKeyListener(new java.awt.event.KeyAdapter() {
+        btnEliminarPago.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnEliminarAfiliado1KeyPressed(evt);
+                btnEliminarPagoKeyPressed(evt);
             }
         });
-        panelPagos.add(btnEliminarAfiliado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 430, -1, 20));
+        panelPagos.add(btnEliminarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 430, -1, 20));
+
+        botonActualizarPagos.setText("Actualizar");
+        botonActualizarPagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualizarPagosActionPerformed(evt);
+            }
+        });
+        panelPagos.add(botonActualizarPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 500, 90, -1));
+
+        btnLimpiarCeldasPago.setBackground(new java.awt.Color(255, 255, 255));
+        btnLimpiarCeldasPago.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnLimpiarCeldasPago.setText("LIMPIAR");
+        btnLimpiarCeldasPago.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnLimpiarCeldasPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarCeldasPagoActionPerformed(evt);
+            }
+        });
+        panelPagos.add(btnLimpiarCeldasPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 460, 120, 20));
+
+        jComboBoxTipoDePago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matrícula", "Mensual" }));
+        panelPagos.add(jComboBoxTipoDePago, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 280, 170, -1));
 
         panelPestañas.addTab("Pagos", panelPagos);
 
@@ -1190,16 +1320,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAgregarNegocioActionPerformed
 
-    private void botonActualizarNegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarNegActionPerformed
+    private void botonActualizarNegociosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarNegociosActionPerformed
         mostrarNegociosTabla();
-    }//GEN-LAST:event_botonActualizarNegActionPerformed
+    }//GEN-LAST:event_botonActualizarNegociosActionPerformed
 
-    private void botonActPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActPersonaActionPerformed
+    private void botonActualizarPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarPersonasActionPerformed
 
         mostrarPersonasTabla();
 
 
-    }//GEN-LAST:event_botonActPersonaActionPerformed
+    }//GEN-LAST:event_botonActualizarPersonasActionPerformed
 
     private void btnEliminarAfiliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAfiliadoActionPerformed
 
@@ -1334,7 +1464,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarCeldasActionPerformed
 
     private void btnLimpiarCeldasNegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCeldasNegActionPerformed
-
+        limpiarNegocios();
     }//GEN-LAST:event_btnLimpiarCeldasNegActionPerformed
 
     private void btnEliminarNegocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarNegocioActionPerformed
@@ -1419,17 +1549,47 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         limpiarAfiliacion();
     }//GEN-LAST:event_btnLimpiarCeldasAfiliacionesActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtIdMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdMontoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtIdMontoActionPerformed
 
-    private void btnAgregarAfiliado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAfiliado1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarAfiliado1ActionPerformed
+    private void btnAgregarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPagoActionPerformed
+        try {
 
-    private void btnAgregarAfiliado1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarAfiliado1KeyPressed
+            Pago pago = new Pago();
+
+            String ciPagos = txtIdCiPagos.getText();
+            
+            SimpleDateFormat FormatoFechaHora = new SimpleDateFormat("yyyy-MM-dd");  
+            Date date = new Date();  
+            String fechaHoraPago = FormatoFechaHora.format(date);
+              
+            Object tipoDePagoOBJ = jComboBoxTipoDePago.getSelectedItem();
+            String tipoDePago = tipoDePagoOBJ.toString();
+            
+            String idMonto = txtIdMonto.getText();
+            System.out.println(idMonto);
+            
+            pago.setCi(ciPagos);
+            pago.setFechaDePago(fechaHoraPago);
+            pago.setTipoDePago(tipoDePago);
+            pago.setMonto(idMonto);
+
+            FachadaLogica.agregarPago(pago);
+
+            JOptionPane.showMessageDialog(null, "Pago agregado correctamente");
+            
+            mostrarPagosTabla();
+
+        } catch (PagoException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se pudo agregar el pago");
+        }
+    }//GEN-LAST:event_btnAgregarPagoActionPerformed
+
+    private void btnAgregarPagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarPagoKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarAfiliado1KeyPressed
+    }//GEN-LAST:event_btnAgregarPagoKeyPressed
 
     private void btnModificarAfiliado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarAfiliado1ActionPerformed
         // TODO add your handling code here:
@@ -1439,24 +1599,79 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarAfiliado1KeyPressed
 
-    private void btnEliminarAfiliado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAfiliado1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarAfiliado1ActionPerformed
+    private void btnEliminarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPagoActionPerformed
+        try {
+            Pago pago = new Pago();
 
-    private void btnEliminarAfiliado1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarAfiliado1KeyPressed
+            String idPago = tablaPagos.getValueAt(tablaPagos.getSelectedRow(), 0).toString();
+
+            pago.setIdPago(idPago);
+            
+            FachadaLogica.eliminarPago(pago);
+
+            JOptionPane.showMessageDialog(null, "Pago eliminado correctamente");
+           
+            mostrarPagosTabla();
+
+        } catch (PagoException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el pago");
+        }
+    }//GEN-LAST:event_btnEliminarPagoActionPerformed
+
+    private void btnEliminarPagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarPagoKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarAfiliado1KeyPressed
+    }//GEN-LAST:event_btnEliminarPagoKeyPressed
 
     private void btnAgregarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLocalActionPerformed
-        // TODO add your handling code here:
+        try {
+
+            Local local = new Local();
+
+            String idNegocio = txtIdNegocioLocal.getText();
+            String direccionLocal = txtDireccionLocal.getText();
+            String nombreEncargado = txtNombreEncargado.getText();
+            String apellidoEncargado = txtApellidoEncargado.getText();
+            String ciEncargado = txtCedulaEncargadoLocal.getText();
+
+            local.setIdNegocio(idNegocio);
+            local.setDireccionLocal(direccionLocal);
+            local.setNombreEncargado(nombreEncargado);
+            local.setApellidoEncargado(apellidoEncargado);
+            local.setCiEncargado(ciEncargado);
+
+            FachadaLogica.agregarLocal(local);
+
+            JOptionPane.showMessageDialog(null, "Local agregado correctamente");
+            
+            mostrarLocalesTabla();
+
+        } catch (LocalException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se pudo agregar el local");
+        }
     }//GEN-LAST:event_btnAgregarLocalActionPerformed
 
     private void btnEliminarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarLocalActionPerformed
-        // TODO add your handling code here:
+        try {
+            Local local = new Local();
+
+            String idLocal = tablaLocales.getValueAt(tablaLocales.getSelectedRow(), 0).toString();
+
+            local.setIdLocal(idLocal);
+            
+            FachadaLogica.eliminarLocal(local);
+
+            JOptionPane.showMessageDialog(null, "Local eliminado correctamente");
+           
+            mostrarLocalesTabla();
+
+        } catch (LocalException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el local");
+        }
     }//GEN-LAST:event_btnEliminarLocalActionPerformed
 
     private void btnLimpiarCeldasLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCeldasLocActionPerformed
-        // TODO add your handling code here:
+        limpiarLocales();
     }//GEN-LAST:event_btnLimpiarCeldasLocActionPerformed
 
     private void btnModificarNegocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarNegocioActionPerformed
@@ -1500,16 +1715,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             
         try{
             
+            String idAfiliacion = txtIdAfiliacion.getText();
             String nombreAfiliacion = txtNombreAfiliacion.getText();
             String ciAfiliado = txtCedulaAfiliacion.getText();
             String descripcion = txtDescripcionAfiliacion.getText();
-            String idAfiliacion = txtIdAfiliacion.getText();
-            
-            
+
+            afiliacion.setIdAfiliacion(idAfiliacion);
             afiliacion.setNombreAfiliacion(nombreAfiliacion);
             afiliacion.setCiAfiliado(ciAfiliado);
             afiliacion.setDescripcion(descripcion);
-            afiliacion.setIdAfiliacion(idAfiliacion);
+            
             
             FachadaLogica.modificarAfiliacion(afiliacion);
             JOptionPane.showMessageDialog(null, "Se modificó la afiliación correctamente");
@@ -1521,17 +1736,58 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModificarAfiliacionesActionPerformed
 
-    private void btnMatriculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatriculaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMatriculaActionPerformed
-
-    private void btnCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuotaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCuotaActionPerformed
-
-    private void botonActAfiliacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActAfiliacionesActionPerformed
+    private void botonActualizarAfiliacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarAfiliacionesActionPerformed
         mostrarAfiliacionesTabla();
-    }//GEN-LAST:event_botonActAfiliacionesActionPerformed
+    }//GEN-LAST:event_botonActualizarAfiliacionesActionPerformed
+
+    private void btnAgregarAfiliacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAfiliacionActionPerformed
+        panelPestañas.setSelectedIndex(1);
+    }//GEN-LAST:event_btnAgregarAfiliacionActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        panelPestañas.setSelectedIndex(4);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnModificarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarLocalActionPerformed
+        
+        try {
+        
+        Local local = new Local();
+
+            String idNegocio = txtIdNegocioLocal.getText();
+            String direccionLocal = txtDireccionLocal.getText();
+            String nombreEncargado = txtNombreEncargado.getText();
+            String apellidoEncargado = txtApellidoEncargado.getText();
+            String ciEncargado = txtCedulaEncargadoLocal.getText();
+
+            local.setIdNegocio(idNegocio);
+            local.setDireccionLocal(direccionLocal);
+            local.setNombreEncargado(nombreEncargado);
+            local.setApellidoEncargado(apellidoEncargado);
+            local.setCiEncargado(ciEncargado);
+        
+            FachadaLogica.modificarLocal(local);
+            JOptionPane.showMessageDialog(null, "Se modificó el local correctamente");
+            
+            mostrarLocalesTabla();
+        
+        } catch (LocalException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se pudo modificar el local");
+        }
+    }//GEN-LAST:event_btnModificarLocalActionPerformed
+
+    private void botonActualizarLocalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarLocalesActionPerformed
+        mostrarLocalesTabla();
+    }//GEN-LAST:event_botonActualizarLocalesActionPerformed
+
+    private void botonActualizarPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarPagosActionPerformed
+        mostrarPagosTabla();
+    }//GEN-LAST:event_botonActualizarPagosActionPerformed
+
+    private void btnLimpiarCeldasPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarCeldasPagoActionPerformed
+        limpiarPagos();
+    }//GEN-LAST:event_btnLimpiarCeldasPagoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1567,34 +1823,36 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
-    private javax.swing.JButton botonActAfiliaciones;
-    private javax.swing.JButton botonActPersona;
-    private javax.swing.JButton botonActualizarNeg;
+    private javax.swing.JButton botonActualizarAfiliaciones;
+    private javax.swing.JButton botonActualizarLocales;
+    private javax.swing.JButton botonActualizarNegocios;
+    private javax.swing.JButton botonActualizarPagos;
+    private javax.swing.JButton botonActualizarPersonas;
     private javax.swing.JButton btnAgregarAfiliacion;
     private javax.swing.JButton btnAgregarAfiliaciones;
     private javax.swing.JButton btnAgregarAfiliado;
-    private javax.swing.JButton btnAgregarAfiliado1;
     private javax.swing.JButton btnAgregarLocal;
     private javax.swing.JButton btnAgregarNegocio;
+    private javax.swing.JButton btnAgregarPago;
     private javax.swing.JButton btnBuscarLocal;
-    private javax.swing.JRadioButton btnCuota;
     private javax.swing.JButton btnEliminarAfiliaciones;
     private javax.swing.JButton btnEliminarAfiliado;
-    private javax.swing.JButton btnEliminarAfiliado1;
     private javax.swing.JButton btnEliminarLocal;
     private javax.swing.JButton btnEliminarNegocio;
+    private javax.swing.JButton btnEliminarPago;
     private javax.swing.ButtonGroup btnGrupoPagos;
     private javax.swing.JButton btnLimpiarCeldas;
     private javax.swing.JButton btnLimpiarCeldasAfiliaciones;
     private javax.swing.JButton btnLimpiarCeldasLoc;
     private javax.swing.JButton btnLimpiarCeldasNeg;
-    private javax.swing.JRadioButton btnMatricula;
+    private javax.swing.JButton btnLimpiarCeldasPago;
     private javax.swing.JButton btnModificarAfiliaciones;
     private javax.swing.JButton btnModificarAfiliado;
     private javax.swing.JButton btnModificarAfiliado1;
     private javax.swing.JButton btnModificarLocal;
     private javax.swing.JButton btnModificarNegocio;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBoxTipoDePago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1638,9 +1896,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JPanel panelAfiliaciones;
     public javax.swing.JPanel panelAfiliados;
     public javax.swing.JPanel panelLocales;
@@ -1650,6 +1905,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable tablaAfiliaciones;
     private javax.swing.JTable tablaLocales;
     private javax.swing.JTable tablaNegocios;
+    private javax.swing.JTable tablaPagos;
     private javax.swing.JTable tablaPersona;
     private javax.swing.JLabel tituloRellenar;
     private javax.swing.JLabel tituloRellenar1;
@@ -1667,6 +1923,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public javax.swing.JTextField txtFechaNacimiento;
     private javax.swing.JTextField txtIdAfiliacion;
     public javax.swing.JTextField txtIdAfiliado;
+    private javax.swing.JTextField txtIdCiPagos;
+    private javax.swing.JTextField txtIdMonto;
     private javax.swing.JTextField txtIdNegocioLocal;
     private javax.swing.JTextField txtIdNegocioMod;
     public javax.swing.JTextField txtNacionalidad;
