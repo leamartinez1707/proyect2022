@@ -42,7 +42,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtNombreAfiliacion.setText("");
         txtCedulaAfiliacion.setText("");
         txtDescripcionAfiliacion.setText("");
-        txtIdAfiliacion.setText("");
         
     }
     public void limpiarAfiliado() {
@@ -59,7 +58,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     public void limpiarNegocios() {
 
-        txtIdNegocioMod.setText("");
         txtRubro.setText("");
         txtIdAfiliado.setText("");
         txtNombreNegocio.setText("");
@@ -196,7 +194,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 modeloLoc.addRow(bLocales);
 
             }
-            tablaAfiliaciones.setModel(modeloLoc);
+            tablaLocales.setModel(modeloLoc);
             
            
         }catch (LocalException ex) {
@@ -211,7 +209,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             // MOSTRAR AFILIADOS EN LA TABLA
             
             Pagos pagos = FachadaLogica.listarPagos();
-            Object[] bPagos = new Object[6];
+            Object[] bPagos = new Object[5];
             DefaultTableModel modeloLoc = (DefaultTableModel) tablaPagos.getModel();
             modeloLoc.setRowCount(0);
             
@@ -246,23 +244,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // MUESTRA TODAS LAS PERSONAS EN LA TABLA        
         mostrarPersonasTabla();
         // FINALIZA MOSTRAR PERSONAS
+        
+        
+        // MOSTRAR AFILIACIONES
+        mostrarAfiliacionesTabla();
+        // FINALIZA MOSTRAR AFILIACIONES 
 
+        
         // MOSTRAR NEGOCIOS EN LA TABLA NEGOCIOS
         mostrarNegociosTabla();
         // FINALIZA MOSTRAR NEGOCIOS     
 
-        // MOSTRAR AFILIACIONES
-        mostrarAfiliacionesTabla();
-        // FINALIZA MOSTRAR AFILIACIONES 
-        
+  
         // MOSTRAR LOCALES
         mostrarLocalesTabla();
         // FINALIZA MOSTRAR LOCALES
         
+        
         // MOSTRAR PAGOS
         mostrarPagosTabla();
         // FINALIZA MOSTRAR PAGOS  
-
     }
 
     @SuppressWarnings("unchecked")
@@ -319,8 +320,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnEliminarAfiliaciones = new javax.swing.JButton();
         btnLimpiarCeldasAfiliaciones = new javax.swing.JButton();
         tituloRellenar1 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        txtIdAfiliacion = new javax.swing.JTextField();
         botonActualizarAfiliaciones = new javax.swing.JButton();
         panelNegocios = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -341,8 +340,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         tituloRellenar2 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        txtIdNegocioMod = new javax.swing.JTextField();
         panelLocales = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
@@ -805,10 +802,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         tituloRellenar1.setText("Rellene todos los campos: ");
         panelAfiliaciones.add(tituloRellenar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 180, 30));
 
-        jLabel33.setText("ID AFILIACION");
-        panelAfiliaciones.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, -1, 20));
-        panelAfiliaciones.add(txtIdAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 230, -1));
-
         botonActualizarAfiliaciones.setText("Actualizar");
         botonActualizarAfiliaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -942,11 +935,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         tituloRellenar2.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         tituloRellenar2.setText("Rellene todos los campos: ");
         panelNegocios.add(tituloRellenar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 180, 30));
-
-        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel32.setText("ID NEGOCIO");
-        panelNegocios.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, -1, -1));
-        panelNegocios.add(txtIdNegocioMod, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, 170, -1));
 
         panelPestañas.addTab("Negocios", panelNegocios);
 
@@ -1358,6 +1346,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         try {
             Persona persona = new Persona();
+            
+            String cedulaDeIdentidad = tablaPersona.getValueAt(tablaPersona.getSelectedRow(), 0).toString();
+
+            // Setea el dato que fue clickeado y se lo agrega a la persona creada.
+            persona.setCedulaDeIdentidad(cedulaDeIdentidad);
 
             String nombre = txtNombre.getText();
             String apellido = txtApellido.getText();
@@ -1366,7 +1359,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             String telefono = txtTelefono.getText();
             String email = txtEmail.getText();
             String fechaDeNacimiento = txtFechaNacimiento.getText();
-            String cedulaDeIdentidad = txtCedulaIdentidad.getText();
 
             persona.setNombre(nombre);
             persona.setApellido(apellido);
@@ -1592,7 +1584,37 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarPagoKeyPressed
 
     private void btnModificarAfiliado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarAfiliado1ActionPerformed
-        // TODO add your handling code here:
+        try {
+        
+        Pago pago = new Pago();
+        
+            String idPago = tablaPagos.getValueAt(tablaPagos.getSelectedRow(), 0).toString();
+
+            String ciPagador = txtIdCiPagos.getText();
+            
+            String fechaDePago = tablaPagos.getValueAt(tablaPagos.getSelectedRow(), 2).toString();
+            
+            Object tipoDePagoOBJ = jComboBoxTipoDePago.getSelectedItem();
+            String tipoDePago = tipoDePagoOBJ.toString();
+            
+            String monto = txtIdMonto.getText();
+
+            pago.setIdPago(idPago);
+            pago.setCi(ciPagador);
+            pago.setFechaDePago(fechaDePago);
+            pago.setTipoDePago(tipoDePago);
+            pago.setMonto(monto);
+            
+            FachadaLogica.modificarPago(pago);
+            JOptionPane.showMessageDialog(null, "Se modificó el pago correctamente");
+            
+            mostrarPagosTabla();
+        
+        } catch (PagoException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se pudo modificar el pago");
+        }
+      
     }//GEN-LAST:event_btnModificarAfiliado1ActionPerformed
 
     private void btnModificarAfiliado1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarAfiliado1KeyPressed
@@ -1604,7 +1626,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             Pago pago = new Pago();
 
             String idPago = tablaPagos.getValueAt(tablaPagos.getSelectedRow(), 0).toString();
-
             pago.setIdPago(idPago);
             
             FachadaLogica.eliminarPago(pago);
@@ -1680,20 +1701,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         Negocio negocio = new Negocio();
         
+        String idNegocio = tablaNegocios.getValueAt(tablaNegocios.getSelectedRow(), 0).toString();
+        negocio.setIdNegocio(idNegocio);
         
         String idAfiliado = txtIdAfiliado.getText();
         String nombreNegocio = txtNombreNegocio.getText();
         String rubro = txtRubro.getText();
         String descripcion = txtDescripcion.getText();
-        String idNegocio = txtIdNegocioMod.getText();
-        
         
         
         negocio.setIdAfiliado(idAfiliado);
         negocio.setNombreNegocio(nombreNegocio);
         negocio.setRubro(rubro);
         negocio.setDescripcion(descripcion);
-        negocio.setIdNegocio(idNegocio);
         
             FachadaLogica.modificarNegocio(negocio);
             JOptionPane.showMessageDialog(null, "Se modificó el negocio correctamente");
@@ -1715,12 +1735,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             
         try{
             
-            String idAfiliacion = txtIdAfiliacion.getText();
+            String idAfiliacion = tablaAfiliaciones.getValueAt(tablaAfiliaciones.getSelectedRow(), 0).toString();
+            afiliacion.setIdAfiliacion(idAfiliacion);
+            
             String nombreAfiliacion = txtNombreAfiliacion.getText();
             String ciAfiliado = txtCedulaAfiliacion.getText();
             String descripcion = txtDescripcionAfiliacion.getText();
 
-            afiliacion.setIdAfiliacion(idAfiliacion);
             afiliacion.setNombreAfiliacion(nombreAfiliacion);
             afiliacion.setCiAfiliado(ciAfiliado);
             afiliacion.setDescripcion(descripcion);
@@ -1753,6 +1774,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         try {
         
         Local local = new Local();
+        
+            String idLocal = tablaLocales.getValueAt(tablaLocales.getSelectedRow(), 0).toString();
+            local.setIdLocal(idLocal);
 
             String idNegocio = txtIdNegocioLocal.getText();
             String direccionLocal = txtDireccionLocal.getText();
@@ -1878,8 +1902,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1921,12 +1943,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txtDireccionLocal;
     public javax.swing.JTextField txtEmail;
     public javax.swing.JTextField txtFechaNacimiento;
-    private javax.swing.JTextField txtIdAfiliacion;
     public javax.swing.JTextField txtIdAfiliado;
     private javax.swing.JTextField txtIdCiPagos;
     private javax.swing.JTextField txtIdMonto;
     private javax.swing.JTextField txtIdNegocioLocal;
-    private javax.swing.JTextField txtIdNegocioMod;
     public javax.swing.JTextField txtNacionalidad;
     public javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreAfiliacion;
