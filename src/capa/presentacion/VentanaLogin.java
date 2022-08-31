@@ -54,7 +54,6 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabelImagen = new javax.swing.JLabel();
-        jLabelTitulo = new javax.swing.JLabel();
         jLabelUsuario = new javax.swing.JLabel();
         jLabelContrasena = new javax.swing.JLabel();
         campoUsuario = new javax.swing.JTextField();
@@ -62,7 +61,8 @@ public class VentanaLogin extends javax.swing.JFrame {
         botonCancelar = new javax.swing.JButton();
         botonConectar = new javax.swing.JButton();
         botonRegistrarse = new javax.swing.JButton();
-        jLabelTitulo1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -78,12 +78,8 @@ public class VentanaLogin extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/bioslog2.jpg"))); // NOI18N
-        jPanel1.add(jLabelImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 450, 310));
-
-        jLabelTitulo.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
-        jLabelTitulo.setText("Biosearcher");
-        jPanel1.add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 170, 30));
+        jLabelImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/imagPro.jpeg"))); // NOI18N
+        jPanel1.add(jLabelImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 480, 310));
 
         jLabelUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelUsuario.setText("Usuario:");
@@ -147,9 +143,13 @@ public class VentanaLogin extends javax.swing.JFrame {
         });
         jPanel1.add(botonRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 440, 110, 30));
 
-        jLabelTitulo1.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
-        jLabelTitulo1.setText("Proyecto Java 2022");
-        jPanel1.add(jLabelTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 230, 30));
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel1.setText("PROYECTO BIOS 2022");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 270, 40));
+
+        jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 260, 10));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 480));
 
@@ -275,11 +275,11 @@ public class VentanaLogin extends javax.swing.JFrame {
     private javax.swing.JButton botonRegistrarse;
     private javax.swing.JPasswordField campoClave;
     private javax.swing.JTextField campoUsuario;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelContrasena;
     private javax.swing.JLabel jLabelImagen;
-    private javax.swing.JLabel jLabelTitulo;
-    private javax.swing.JLabel jLabelTitulo1;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator3;
     // End of variables declaration//GEN-END:variables
 }

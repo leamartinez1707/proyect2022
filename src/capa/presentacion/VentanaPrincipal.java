@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -202,16 +203,49 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }
     
-    public final void mostrarPagosTabla(){
+    public final void mostrarLocalesFiltradoPorIdNegocioTabla(Local local){
         
         try {
 
             // MOSTRAR AFILIADOS EN LA TABLA
             
+            Locales locales = FachadaLogica.listarLocalesFiltradosPorIdNegocio(local);
+            Object[] bLocales = new Object[6];
+            DefaultTableModel modeloLoc = (DefaultTableModel) tablaLocales.getModel();
+            modeloLoc.setRowCount(0);
+            
+            for (int i = 0; i < locales.getLocales().size(); i++) {
+
+                local = locales.getLocales().get(i);
+
+                bLocales[0] = local.getIdLocal();
+                bLocales[1] = local.getIdNegocio();
+                bLocales[2] = local.getDireccionLocal();
+                bLocales[3] = local.getNombreEncargado();
+                bLocales[4] = local.getApellidoEncargado();
+                bLocales[5] = local.getCiEncargado();
+                
+                modeloLoc.addRow(bLocales);
+
+            }
+            tablaLocales.setModel(modeloLoc);
+            
+           
+        }catch (LocalException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public final void mostrarPagosTabla(){
+        
+        try {
+
+            // MOSTRAR PAGOS EN LA TABLA
+            
             Pagos pagos = FachadaLogica.listarPagos();
             Object[] bPagos = new Object[5];
-            DefaultTableModel modeloLoc = (DefaultTableModel) tablaPagos.getModel();
-            modeloLoc.setRowCount(0);
+            DefaultTableModel modeloPag = (DefaultTableModel) tablaPagos.getModel();
+            modeloPag.setRowCount(0);
             
             for (int i = 0; i < pagos.getPagos().size(); i++) {
 
@@ -223,10 +257,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 bPagos[3] = pago.getTipoDePago();
                 bPagos[4] = pago.getMonto();
                 
-                modeloLoc.addRow(bPagos);
+                modeloPag.addRow(bPagos);
 
             }
-            tablaPagos.setModel(modeloLoc);
+            tablaPagos.setModel(modeloPag);
             
            
         }catch (PagoException ex) {
@@ -238,31 +272,36 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("PROYECTO BIOS 2022 - JAVA - BIOSEARCHER ");
+        setTitle("Biosearcher");
         setResizable(false);
 
         // MUESTRA TODAS LAS PERSONAS EN LA TABLA        
         mostrarPersonasTabla();
+        tablaPersona.setAutoCreateRowSorter(true);
         // FINALIZA MOSTRAR PERSONAS
         
         
         // MOSTRAR AFILIACIONES
         mostrarAfiliacionesTabla();
+        tablaAfiliaciones.setAutoCreateRowSorter(true);
         // FINALIZA MOSTRAR AFILIACIONES 
 
         
         // MOSTRAR NEGOCIOS EN LA TABLA NEGOCIOS
         mostrarNegociosTabla();
+        tablaNegocios.setAutoCreateRowSorter(true);
         // FINALIZA MOSTRAR NEGOCIOS     
 
   
         // MOSTRAR LOCALES
         mostrarLocalesTabla();
+        tablaLocales.setAutoCreateRowSorter(true);
         // FINALIZA MOSTRAR LOCALES
         
         
         // MOSTRAR PAGOS
         mostrarPagosTabla();
+        tablaPagos.setAutoCreateRowSorter(true);
         // FINALIZA MOSTRAR PAGOS  
     }
 
@@ -311,7 +350,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnIngresarPago = new javax.swing.JButton();
         txtNombreAfiliacion = new javax.swing.JTextField();
         txtCedulaAfiliacion = new javax.swing.JTextField();
         txtDescripcionAfiliacion = new javax.swing.JTextField();
@@ -319,8 +358,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnModificarAfiliaciones = new javax.swing.JButton();
         btnEliminarAfiliaciones = new javax.swing.JButton();
         btnLimpiarCeldasAfiliaciones = new javax.swing.JButton();
-        tituloRellenar1 = new javax.swing.JLabel();
         botonActualizarAfiliaciones = new javax.swing.JButton();
+        tituloRellenar3 = new javax.swing.JLabel();
         panelNegocios = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaNegocios = new javax.swing.JTable();
@@ -339,7 +378,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        tituloRellenar2 = new javax.swing.JLabel();
+        tituloRellenar4 = new javax.swing.JLabel();
+        btnAgregarLocall = new javax.swing.JButton();
         panelLocales = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
@@ -359,8 +399,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnModificarLocal = new javax.swing.JButton();
         btnEliminarLocal = new javax.swing.JButton();
         btnLimpiarCeldasLoc = new javax.swing.JButton();
-        btnBuscarLocal = new javax.swing.JButton();
+        btnBuscarLocalPorIdNegocio = new javax.swing.JButton();
         botonActualizarLocales = new javax.swing.JButton();
+        tituloRellenar5 = new javax.swing.JLabel();
         panelPagos = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
@@ -378,6 +419,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         botonActualizarPagos = new javax.swing.JButton();
         btnLimpiarCeldasPago = new javax.swing.JButton();
         jComboBoxTipoDePago = new javax.swing.JComboBox<>();
+        tituloRellenar6 = new javax.swing.JLabel();
+        jFecha = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -390,8 +433,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         background.setPreferredSize(new java.awt.Dimension(1024, 768));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelPestañas.setBackground(new java.awt.Color(255, 255, 255));
+        panelPestañas.setBackground(new java.awt.Color(255, 255, 204));
         panelPestañas.setMinimumSize(new java.awt.Dimension(800, 600));
+        panelPestañas.setPreferredSize(new java.awt.Dimension(1024, 768));
 
         panelAfiliados.setBackground(new java.awt.Color(204, 255, 255));
         panelAfiliados.setMinimumSize(new java.awt.Dimension(1024, 768));
@@ -423,8 +467,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         tablaPersona.setColumnSelectionAllowed(true);
+        tablaPersona.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaPersona.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         tablaPersona.setFillsViewportHeight(true);
+        tablaPersona.setGridColor(new java.awt.Color(255, 255, 204));
         jScrollPane1.setViewportView(tablaPersona);
         tablaPersona.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -433,7 +479,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnAgregarAfiliado.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregarAfiliado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnAgregarAfiliado.setText("INGRESAR");
-        btnAgregarAfiliado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnAgregarAfiliado.setBorder(null);
         btnAgregarAfiliado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarAfiliadoActionPerformed(evt);
@@ -449,7 +495,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnModificarAfiliado.setBackground(new java.awt.Color(255, 255, 255));
         btnModificarAfiliado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnModificarAfiliado.setText("MODIFICAR");
-        btnModificarAfiliado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnModificarAfiliado.setBorder(null);
         btnModificarAfiliado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarAfiliadoActionPerformed(evt);
@@ -465,7 +511,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnEliminarAfiliado.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminarAfiliado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnEliminarAfiliado.setText("ELIMINAR");
-        btnEliminarAfiliado.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnEliminarAfiliado.setBorder(null);
         btnEliminarAfiliado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarAfiliadoActionPerformed(evt);
@@ -481,7 +527,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnLimpiarCeldas.setBackground(new java.awt.Color(255, 255, 255));
         btnLimpiarCeldas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnLimpiarCeldas.setText("LIMPIAR");
-        btnLimpiarCeldas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnLimpiarCeldas.setBorder(null);
         btnLimpiarCeldas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarCeldasActionPerformed(evt);
@@ -496,7 +542,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         txtCedulaIdentidad.setBackground(new java.awt.Color(255, 255, 204));
         txtCedulaIdentidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtCedulaIdentidad.setText("ASDADAS");
+        txtCedulaIdentidad.setForeground(new java.awt.Color(204, 204, 204));
+        txtCedulaIdentidad.setText("8 dígitos");
         txtCedulaIdentidad.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtCedulaIdentidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -511,11 +558,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtCedulaIdentidadActionPerformed(evt);
             }
         });
-        panelAfiliados.add(txtCedulaIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, 170, 20));
+        panelAfiliados.add(txtCedulaIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 130, 200, 20));
 
         txtNombre.setBackground(new java.awt.Color(255, 255, 204));
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(153, 153, 153));
         txtNombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtNombre.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -525,11 +571,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtNombreMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 160, 170, 20));
+        panelAfiliados.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 160, 200, 20));
 
         txtNacionalidad.setBackground(new java.awt.Color(255, 255, 204));
         txtNacionalidad.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtNacionalidad.setForeground(new java.awt.Color(153, 153, 153));
         txtNacionalidad.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtNacionalidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -539,11 +584,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtNacionalidadMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 170, 20));
+        panelAfiliados.add(txtNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 220, 200, 20));
 
         txtDireccion.setBackground(new java.awt.Color(255, 255, 204));
         txtDireccion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtDireccion.setForeground(new java.awt.Color(153, 153, 153));
         txtDireccion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtDireccion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -558,11 +602,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtDireccionActionPerformed(evt);
             }
         });
-        panelAfiliados.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 170, 20));
+        panelAfiliados.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, 200, 20));
 
         txtTelefono.setBackground(new java.awt.Color(255, 255, 204));
         txtTelefono.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtTelefono.setForeground(new java.awt.Color(153, 153, 153));
         txtTelefono.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -572,11 +615,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtTelefonoMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 280, 170, 20));
+        panelAfiliados.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 280, 200, 20));
 
         txtEmail.setBackground(new java.awt.Color(255, 255, 204));
         txtEmail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtEmail.setForeground(new java.awt.Color(153, 153, 153));
         txtEmail.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtEmail.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -586,13 +628,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtEmailMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, 170, 20));
+        panelAfiliados.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 310, 200, 20));
 
         txtFechaNacimiento.setBackground(new java.awt.Color(255, 255, 204));
         txtFechaNacimiento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         txtFechaNacimiento.setForeground(new java.awt.Color(153, 153, 153));
         txtFechaNacimiento.setText("1999-12-31");
-        txtFechaNacimiento.setBorder(null);
+        txtFechaNacimiento.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtFechaNacimiento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtFechaNacimientoMouseClicked(evt);
@@ -601,7 +643,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtFechaNacimientoMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 170, 20));
+        txtFechaNacimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaNacimientoActionPerformed(evt);
+            }
+        });
+        panelAfiliados.add(txtFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 340, 200, 20));
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel2.setText("CEDULA DE IDENTIDAD");
@@ -632,7 +679,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelAfiliados.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 340, -1, -1));
 
         jLabel9.setText("año-mes-día");
-        panelAfiliados.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 340, 80, 20));
+        panelAfiliados.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 340, 80, 20));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 0, 0));
@@ -640,7 +687,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelAfiliados.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 130, 40));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        panelAfiliados.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 210, 10));
+        panelAfiliados.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 180, 10));
         panelAfiliados.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, -1, -1));
 
         botonActualizarPersonas.setText("Actualizar");
@@ -671,7 +718,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         txtApellido.setBackground(new java.awt.Color(255, 255, 204));
         txtApellido.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtApellido.setForeground(new java.awt.Color(153, 153, 153));
         txtApellido.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtApellido.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -681,13 +727,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 txtApellidoMousePressed(evt);
             }
         });
-        panelAfiliados.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 190, 170, 20));
+        panelAfiliados.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 200, 20));
 
         panelPestañas.addTab("Afiliados", panelAfiliados);
 
-        panelAfiliaciones.setBackground(new java.awt.Color(204, 204, 204));
+        panelAfiliaciones.setBackground(new java.awt.Color(204, 255, 255));
+        panelAfiliaciones.setMinimumSize(new java.awt.Dimension(800, 600));
+        panelAfiliaciones.setPreferredSize(new java.awt.Dimension(1024, 768));
         panelAfiliaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jScrollPane3.setBackground(new java.awt.Color(255, 255, 204));
+
+        tablaAfiliaciones.setBackground(new java.awt.Color(255, 255, 204));
         tablaAfiliaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -711,96 +762,110 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaAfiliaciones.setColumnSelectionAllowed(true);
+        tablaAfiliaciones.setGridColor(new java.awt.Color(255, 255, 204));
         jScrollPane3.setViewportView(tablaAfiliaciones);
+        tablaAfiliaciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        panelAfiliaciones.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 920, 200));
+        panelAfiliaciones.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 470, 860, 200));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel15.setText("Afiliaciones");
-        panelAfiliaciones.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 110, 50));
+        jLabel15.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel15.setText("ABM Afiliaciones");
+        panelAfiliaciones.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 150, 50));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        panelAfiliaciones.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, 160, 10));
+        panelAfiliaciones.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, 210, 10));
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel16.setText("NOMBRE AFILIACION");
         panelAfiliaciones.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, -1, -1));
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel17.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel17.setText("C.I AFILIADO");
         panelAfiliaciones.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, -1, -1));
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel18.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel18.setText("DESCRIPCIÓN");
         panelAfiliaciones.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, -1, -1));
 
-        jButton1.setText("Ingresar Pago");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnIngresarPago.setBackground(new java.awt.Color(255, 255, 255));
+        btnIngresarPago.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnIngresarPago.setText("Ingresar Pago");
+        btnIngresarPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnIngresarPagoActionPerformed(evt);
             }
         });
-        panelAfiliaciones.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 190, -1, -1));
+        panelAfiliaciones.add(btnIngresarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 400, 120, -1));
 
+        txtNombreAfiliacion.setBackground(new java.awt.Color(255, 255, 204));
         txtNombreAfiliacion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtNombreAfiliacion.setBorder(null);
+        txtNombreAfiliacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelAfiliaciones.add(txtNombreAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 180, 230, 20));
 
+        txtCedulaAfiliacion.setBackground(new java.awt.Color(255, 255, 204));
         txtCedulaAfiliacion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtCedulaAfiliacion.setBorder(null);
+        txtCedulaAfiliacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelAfiliaciones.add(txtCedulaAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 230, 20));
 
+        txtDescripcionAfiliacion.setBackground(new java.awt.Color(255, 255, 204));
         txtDescripcionAfiliacion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txtDescripcionAfiliacion.setBorder(null);
+        txtDescripcionAfiliacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelAfiliaciones.add(txtDescripcionAfiliacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 280, 230, 90));
 
         btnAgregarAfiliaciones.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregarAfiliaciones.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnAgregarAfiliaciones.setText("INGRESAR");
-        btnAgregarAfiliaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnAgregarAfiliaciones.setBorder(null);
         btnAgregarAfiliaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarAfiliacionesActionPerformed(evt);
             }
         });
-        panelAfiliaciones.add(btnAgregarAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(237, 420, -1, 20));
+        panelAfiliaciones.add(btnAgregarAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(227, 420, 100, 20));
 
         btnModificarAfiliaciones.setBackground(new java.awt.Color(255, 255, 255));
         btnModificarAfiliaciones.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnModificarAfiliaciones.setText("MODIFICAR");
-        btnModificarAfiliaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnModificarAfiliaciones.setBorder(null);
+        btnModificarAfiliaciones.setMaximumSize(new java.awt.Dimension(77, 17));
+        btnModificarAfiliaciones.setMinimumSize(new java.awt.Dimension(77, 17));
+        btnModificarAfiliaciones.setPreferredSize(new java.awt.Dimension(77, 17));
         btnModificarAfiliaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarAfiliacionesActionPerformed(evt);
             }
         });
-        panelAfiliaciones.add(btnModificarAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 420, -1, 20));
+        panelAfiliaciones.add(btnModificarAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 420, 110, 20));
 
         btnEliminarAfiliaciones.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminarAfiliaciones.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnEliminarAfiliaciones.setText("ELIMINAR");
-        btnEliminarAfiliaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnEliminarAfiliaciones.setBorder(null);
+        btnEliminarAfiliaciones.setMaximumSize(new java.awt.Dimension(77, 17));
+        btnEliminarAfiliaciones.setMinimumSize(new java.awt.Dimension(77, 17));
+        btnEliminarAfiliaciones.setPreferredSize(new java.awt.Dimension(77, 17));
         btnEliminarAfiliaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarAfiliacionesActionPerformed(evt);
             }
         });
-        panelAfiliaciones.add(btnEliminarAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, -1, 20));
+        panelAfiliaciones.add(btnEliminarAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 420, 100, 20));
 
         btnLimpiarCeldasAfiliaciones.setBackground(new java.awt.Color(255, 255, 255));
         btnLimpiarCeldasAfiliaciones.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnLimpiarCeldasAfiliaciones.setText("LIMPIAR");
-        btnLimpiarCeldasAfiliaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btnLimpiarCeldasAfiliaciones.setBorder(null);
+        btnLimpiarCeldasAfiliaciones.setMaximumSize(new java.awt.Dimension(77, 17));
+        btnLimpiarCeldasAfiliaciones.setMinimumSize(new java.awt.Dimension(77, 17));
+        btnLimpiarCeldasAfiliaciones.setPreferredSize(new java.awt.Dimension(77, 17));
         btnLimpiarCeldasAfiliaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimpiarCeldasAfiliacionesActionPerformed(evt);
             }
         });
-        panelAfiliaciones.add(btnLimpiarCeldasAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 420, 100, 20));
-
-        tituloRellenar1.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        tituloRellenar1.setText("Rellene todos los campos: ");
-        panelAfiliaciones.add(tituloRellenar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 180, 30));
+        panelAfiliaciones.add(btnLimpiarCeldasAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 420, 110, 20));
 
         botonActualizarAfiliaciones.setText("Actualizar");
         botonActualizarAfiliaciones.addActionListener(new java.awt.event.ActionListener() {
@@ -808,28 +873,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 botonActualizarAfiliacionesActionPerformed(evt);
             }
         });
-        panelAfiliaciones.add(botonActualizarAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 410, -1, -1));
+        panelAfiliaciones.add(botonActualizarAfiliaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 430, -1, -1));
+
+        tituloRellenar3.setFont(new java.awt.Font("Monotype Corsiva", 2, 24)); // NOI18N
+        tituloRellenar3.setForeground(new java.awt.Color(51, 51, 51));
+        tituloRellenar3.setText("Rellene todos los campos: ");
+        panelAfiliaciones.add(tituloRellenar3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 220, 20));
 
         panelPestañas.addTab("Afiliaciones", panelAfiliaciones);
 
-        panelNegocios.setBackground(new java.awt.Color(204, 204, 204));
-        panelNegocios.setMinimumSize(new java.awt.Dimension(1024, 768));
+        panelNegocios.setBackground(new java.awt.Color(204, 255, 255));
+        panelNegocios.setMinimumSize(new java.awt.Dimension(800, 600));
         panelNegocios.setPreferredSize(new java.awt.Dimension(1024, 768));
         panelNegocios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tablaNegocios.setBackground(new java.awt.Color(255, 255, 204));
         tablaNegocios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID Negocio", "ID Afiliado", "Nombre del Negocio", "Rubro", "Descripción"
+                "ID Negocio", "ID Afiliado", "Rubro", "Nombre del Negocio", "Descripción"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -840,23 +911,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaNegocios.setColumnSelectionAllowed(true);
         jScrollPane2.setViewportView(tablaNegocios);
+        tablaNegocios.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         panelNegocios.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 920, 190));
 
+        txtRubro.setBackground(new java.awt.Color(255, 255, 204));
         txtRubro.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtRubro.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtRubro.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        panelNegocios.add(txtRubro, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 200, 300, 20));
+        panelNegocios.add(txtRubro, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, 260, 20));
 
+        txtIdAfiliado.setBackground(new java.awt.Color(255, 255, 204));
         txtIdAfiliado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        panelNegocios.add(txtIdAfiliado, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 300, 20));
+        txtIdAfiliado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelNegocios.add(txtIdAfiliado, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 260, 20));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 0, 0));
         jLabel12.setText("ABM Negocios");
-        panelNegocios.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 130, 40));
+        panelNegocios.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 130, 40));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        panelNegocios.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 210, 10));
+        panelNegocios.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 170, 10));
 
         btnAgregarNegocio.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregarNegocio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -902,8 +980,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         panelNegocios.add(btnLimpiarCeldasNeg, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 470, 100, 20));
 
+        txtNombreNegocio.setBackground(new java.awt.Color(255, 255, 204));
         txtNombreNegocio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        panelNegocios.add(txtNombreNegocio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, 300, 20));
+        txtNombreNegocio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelNegocios.add(txtNombreNegocio, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, 260, 20));
 
         botonActualizarNegocios.setText("Actualizar");
         botonActualizarNegocios.addActionListener(new java.awt.event.ActionListener() {
@@ -913,43 +993,57 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         panelNegocios.add(botonActualizarNegocios, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 500, 90, -1));
 
+        txtDescripcion.setBackground(new java.awt.Color(255, 255, 204));
         txtDescripcion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        panelNegocios.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, 300, 100));
+        txtDescripcion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelNegocios.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, 260, 100));
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel19.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel19.setText("RUBRO");
-        panelNegocios.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 200, 80, -1));
+        panelNegocios.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 80, -1));
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel20.setText("ID AFILIADO");
         panelNegocios.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, -1, -1));
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel21.setText("NOMBRE DEL NEGOCIO");
-        panelNegocios.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, -1, -1));
+        panelNegocios.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, -1, -1));
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel22.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel22.setText("DESCRIPCION");
         panelNegocios.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, -1, -1));
 
-        tituloRellenar2.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        tituloRellenar2.setText("Rellene todos los campos: ");
-        panelNegocios.add(tituloRellenar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 180, 30));
+        tituloRellenar4.setFont(new java.awt.Font("Monotype Corsiva", 2, 24)); // NOI18N
+        tituloRellenar4.setForeground(new java.awt.Color(51, 51, 51));
+        tituloRellenar4.setText("Rellene todos los campos: ");
+        panelNegocios.add(tituloRellenar4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 220, 20));
+
+        btnAgregarLocall.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnAgregarLocall.setText("Agregar Local");
+        btnAgregarLocall.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarLocallActionPerformed(evt);
+            }
+        });
+        panelNegocios.add(btnAgregarLocall, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 470, 130, -1));
 
         panelPestañas.addTab("Negocios", panelNegocios);
 
-        panelLocales.setBackground(new java.awt.Color(204, 204, 204));
-        panelLocales.setMinimumSize(new java.awt.Dimension(1024, 768));
+        panelLocales.setBackground(new java.awt.Color(204, 255, 255));
+        panelLocales.setMinimumSize(new java.awt.Dimension(800, 600));
         panelLocales.setPreferredSize(new java.awt.Dimension(1024, 768));
         panelLocales.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 0, 0));
         jLabel26.setText("ABM Locales");
-        panelLocales.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, -1, 50));
+        panelLocales.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, -1, 50));
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        panelLocales.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, 170, 10));
+        panelLocales.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 170, 10));
 
+        tablaLocales.setBackground(new java.awt.Color(255, 255, 204));
         tablaLocales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -961,49 +1055,68 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
+        tablaLocales.setColumnSelectionAllowed(true);
         jScrollPane5.setViewportView(tablaLocales);
+        tablaLocales.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         panelLocales.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 490, 720, 200));
 
-        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel27.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel27.setText("ID NEGOCIO");
-        panelLocales.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, -1, -1));
+        panelLocales.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, -1, -1));
 
-        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel28.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel28.setText("DIRECCIÓN");
-        panelLocales.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, -1, -1));
+        panelLocales.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, -1, -1));
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel29.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel29.setText("NOMBRE ENCARGADO");
-        panelLocales.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 270, -1, -1));
+        panelLocales.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, -1, -1));
 
-        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel30.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel30.setText("APELLIDO ENCARGADO");
-        panelLocales.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 320, -1, -1));
+        panelLocales.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, -1, -1));
 
-        jLabel31.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel31.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel31.setText("C.I ENCARGADO");
-        panelLocales.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 370, -1, -1));
+        panelLocales.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, -1, -1));
 
-        txtIdNegocioLocal.setBorder(null);
-        panelLocales.add(txtIdNegocioLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 170, 20));
+        txtIdNegocioLocal.setBackground(new java.awt.Color(255, 255, 204));
+        txtIdNegocioLocal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtIdNegocioLocal.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelLocales.add(txtIdNegocioLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 190, 20));
 
-        txtDireccionLocal.setBorder(null);
-        panelLocales.add(txtDireccionLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 170, 20));
+        txtDireccionLocal.setBackground(new java.awt.Color(255, 255, 204));
+        txtDireccionLocal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDireccionLocal.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelLocales.add(txtDireccionLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 210, 190, 20));
 
-        txtNombreEncargado.setBorder(null);
-        panelLocales.add(txtNombreEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, 170, 20));
+        txtNombreEncargado.setBackground(new java.awt.Color(255, 255, 204));
+        txtNombreEncargado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombreEncargado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelLocales.add(txtNombreEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 260, 190, 20));
 
-        txtApellidoEncargado.setBorder(null);
-        panelLocales.add(txtApellidoEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 320, 170, 20));
+        txtApellidoEncargado.setBackground(new java.awt.Color(255, 255, 204));
+        txtApellidoEncargado.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtApellidoEncargado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelLocales.add(txtApellidoEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 310, 190, 20));
 
-        txtCedulaEncargadoLocal.setBorder(null);
-        panelLocales.add(txtCedulaEncargadoLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 370, 170, 20));
+        txtCedulaEncargadoLocal.setBackground(new java.awt.Color(255, 255, 204));
+        txtCedulaEncargadoLocal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCedulaEncargadoLocal.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelLocales.add(txtCedulaEncargadoLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, 190, 20));
 
         btnAgregarLocal.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregarLocal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1049,9 +1162,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         panelLocales.add(btnLimpiarCeldasLoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 450, 120, 20));
 
-        btnBuscarLocal.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnBuscarLocal.setText("BUSCAR");
-        panelLocales.add(btnBuscarLocal, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 167, 80, -1));
+        btnBuscarLocalPorIdNegocio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBuscarLocalPorIdNegocio.setText("Buscar por IdNegocio");
+        btnBuscarLocalPorIdNegocio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarLocalPorIdNegocioActionPerformed(evt);
+            }
+        });
+        panelLocales.add(btnBuscarLocalPorIdNegocio, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 160, 170, -1));
 
         botonActualizarLocales.setText("Actualizar");
         botonActualizarLocales.addActionListener(new java.awt.event.ActionListener() {
@@ -1059,20 +1177,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 botonActualizarLocalesActionPerformed(evt);
             }
         });
-        panelLocales.add(botonActualizarLocales, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 380, 90, -1));
+        panelLocales.add(botonActualizarLocales, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 490, 90, -1));
+
+        tituloRellenar5.setFont(new java.awt.Font("Monotype Corsiva", 2, 24)); // NOI18N
+        tituloRellenar5.setForeground(new java.awt.Color(51, 51, 51));
+        tituloRellenar5.setText("Rellene todos los campos: ");
+        panelLocales.add(tituloRellenar5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 220, 20));
 
         panelPestañas.addTab("Locales", panelLocales);
 
-        panelPagos.setBackground(new java.awt.Color(204, 204, 204));
+        panelPagos.setBackground(new java.awt.Color(204, 255, 255));
+        panelPagos.setMinimumSize(new java.awt.Dimension(800, 600));
+        panelPagos.setPreferredSize(new java.awt.Dimension(1024, 768));
         panelPagos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 0, 0));
         jLabel13.setText("ABM Pagos");
-        panelPagos.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 130, 40));
+        panelPagos.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 130, 40));
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
-        panelPagos.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 210, 10));
+        panelPagos.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, 160, 10));
 
+        tablaPagos.setBackground(new java.awt.Color(255, 255, 204));
         tablaPagos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1085,7 +1212,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1096,36 +1223,37 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaPagos.setColumnSelectionAllowed(true);
         jScrollPane4.setViewportView(tablaPagos);
+        tablaPagos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        panelPagos.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 390, -1));
+        panelPagos.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 390, -1));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel1.setText("CEDULA DE IDENTIDAD");
-        panelPagos.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, 170, 20));
+        panelPagos.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 230, 170, 20));
 
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel24.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel24.setText("TIPO DE PAGO");
-        panelPagos.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 280, -1, -1));
+        panelPagos.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, -1, -1));
 
-        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel23.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel23.setText("MONTO A DEPÓSITAR");
-        panelPagos.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 350, -1, -1));
+        panelPagos.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 370, -1, -1));
 
-        txtIdCiPagos.setBorder(null);
-        panelPagos.add(txtIdCiPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 210, 120, 20));
+        txtIdCiPagos.setBackground(new java.awt.Color(255, 255, 204));
+        txtIdCiPagos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtIdCiPagos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelPagos.add(txtIdCiPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 230, 170, 20));
 
-        txtIdMonto.setBorder(null);
-        txtIdMonto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdMontoActionPerformed(evt);
-            }
-        });
-        panelPagos.add(txtIdMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 350, 120, 20));
+        txtIdMonto.setBackground(new java.awt.Color(255, 255, 204));
+        txtIdMonto.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtIdMonto.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelPagos.add(txtIdMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 370, 170, 20));
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel25.setText("$U");
-        panelPagos.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 340, 30, 40));
+        panelPagos.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 360, 30, 40));
 
         btnAgregarPago.setBackground(new java.awt.Color(255, 255, 255));
         btnAgregarPago.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1141,7 +1269,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 btnAgregarPagoKeyPressed(evt);
             }
         });
-        panelPagos.add(btnAgregarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 120, 20));
+        panelPagos.add(btnAgregarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 450, 120, 20));
 
         btnModificarAfiliado1.setBackground(new java.awt.Color(255, 255, 255));
         btnModificarAfiliado1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1157,7 +1285,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 btnModificarAfiliado1KeyPressed(evt);
             }
         });
-        panelPagos.add(btnModificarAfiliado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 430, 120, 20));
+        panelPagos.add(btnModificarAfiliado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 450, 120, 20));
 
         btnEliminarPago.setBackground(new java.awt.Color(255, 255, 255));
         btnEliminarPago.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1173,7 +1301,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 btnEliminarPagoKeyPressed(evt);
             }
         });
-        panelPagos.add(btnEliminarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 430, -1, 20));
+        panelPagos.add(btnEliminarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 450, -1, 20));
 
         botonActualizarPagos.setText("Actualizar");
         botonActualizarPagos.addActionListener(new java.awt.event.ActionListener() {
@@ -1181,7 +1309,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 botonActualizarPagosActionPerformed(evt);
             }
         });
-        panelPagos.add(botonActualizarPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 500, 90, -1));
+        panelPagos.add(botonActualizarPagos, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 640, 90, -1));
 
         btnLimpiarCeldasPago.setBackground(new java.awt.Color(255, 255, 255));
         btnLimpiarCeldasPago.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1192,14 +1320,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 btnLimpiarCeldasPagoActionPerformed(evt);
             }
         });
-        panelPagos.add(btnLimpiarCeldasPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 460, 120, 20));
+        panelPagos.add(btnLimpiarCeldasPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 500, 120, 20));
 
+        jComboBoxTipoDePago.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jComboBoxTipoDePago.setMaximumRowCount(2);
         jComboBoxTipoDePago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Matrícula", "Mensual" }));
-        panelPagos.add(jComboBoxTipoDePago, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 280, 170, -1));
+        jComboBoxTipoDePago.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelPagos.add(jComboBoxTipoDePago, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 300, 170, -1));
+
+        tituloRellenar6.setFont(new java.awt.Font("Monotype Corsiva", 2, 24)); // NOI18N
+        tituloRellenar6.setForeground(new java.awt.Color(51, 51, 51));
+        tituloRellenar6.setText("Rellene todos los campos: ");
+        panelPagos.add(tituloRellenar6, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 220, 20));
+
+        jFecha.setDateFormatString("yyyy/MM/dd HH:mm:ss");
+        panelPagos.add(jFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 330, -1, -1));
 
         panelPestañas.addTab("Pagos", panelPagos);
 
-        background.add(panelPestañas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 790));
+        background.add(panelPestañas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1541,10 +1680,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         limpiarAfiliacion();
     }//GEN-LAST:event_btnLimpiarCeldasAfiliacionesActionPerformed
 
-    private void txtIdMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdMontoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdMontoActionPerformed
-
     private void btnAgregarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPagoActionPerformed
         try {
 
@@ -1552,9 +1687,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             String ciPagos = txtIdCiPagos.getText();
             
-            SimpleDateFormat FormatoFechaHora = new SimpleDateFormat("yyyy-MM-dd");  
+            SimpleDateFormat FormatoFechaHora = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  
             Date date = new Date();  
             String fechaHoraPago = FormatoFechaHora.format(date);
+            
+            //JTextField fechaPagoHora = new JTextField();
+            
+            //String fechaHoraPago = (JTextField)jFecha.getDateEditor().getUiComponent();
               
             Object tipoDePagoOBJ = jComboBoxTipoDePago.getSelectedItem();
             String tipoDePago = tipoDePagoOBJ.toString();
@@ -1765,9 +1904,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelPestañas.setSelectedIndex(1);
     }//GEN-LAST:event_btnAgregarAfiliacionActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnIngresarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarPagoActionPerformed
         panelPestañas.setSelectedIndex(4);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnIngresarPagoActionPerformed
 
     private void btnModificarLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarLocalActionPerformed
         
@@ -1813,6 +1952,31 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         limpiarPagos();
     }//GEN-LAST:event_btnLimpiarCeldasPagoActionPerformed
 
+    private void btnBuscarLocalPorIdNegocioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarLocalPorIdNegocioActionPerformed
+        Local local = new Local();
+
+        String idNegocio = txtIdNegocioLocal.getText();
+
+        local.setIdNegocio(idNegocio);
+
+        try {
+            FachadaLogica.listarLocalesFiltradosPorIdNegocio(local);
+        } catch (LocalException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        
+        mostrarLocalesFiltradoPorIdNegocioTabla(local);
+    }//GEN-LAST:event_btnBuscarLocalPorIdNegocioActionPerformed
+
+    private void txtFechaNacimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaNacimientoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaNacimientoActionPerformed
+
+    private void btnAgregarLocallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLocallActionPerformed
+        panelPestañas.setSelectedIndex(3);
+    }//GEN-LAST:event_btnAgregarLocallActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1856,15 +2020,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarAfiliaciones;
     private javax.swing.JButton btnAgregarAfiliado;
     private javax.swing.JButton btnAgregarLocal;
+    private javax.swing.JButton btnAgregarLocall;
     private javax.swing.JButton btnAgregarNegocio;
     private javax.swing.JButton btnAgregarPago;
-    private javax.swing.JButton btnBuscarLocal;
+    private javax.swing.JButton btnBuscarLocalPorIdNegocio;
     private javax.swing.JButton btnEliminarAfiliaciones;
     private javax.swing.JButton btnEliminarAfiliado;
     private javax.swing.JButton btnEliminarLocal;
     private javax.swing.JButton btnEliminarNegocio;
     private javax.swing.JButton btnEliminarPago;
     private javax.swing.ButtonGroup btnGrupoPagos;
+    private javax.swing.JButton btnIngresarPago;
     private javax.swing.JButton btnLimpiarCeldas;
     private javax.swing.JButton btnLimpiarCeldasAfiliaciones;
     private javax.swing.JButton btnLimpiarCeldasLoc;
@@ -1875,8 +2041,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnModificarAfiliado1;
     private javax.swing.JButton btnModificarLocal;
     private javax.swing.JButton btnModificarNegocio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBoxTipoDePago;
+    private com.toedter.calendar.JDateChooser jFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1930,8 +2096,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable tablaPagos;
     private javax.swing.JTable tablaPersona;
     private javax.swing.JLabel tituloRellenar;
-    private javax.swing.JLabel tituloRellenar1;
-    private javax.swing.JLabel tituloRellenar2;
+    private javax.swing.JLabel tituloRellenar3;
+    private javax.swing.JLabel tituloRellenar4;
+    private javax.swing.JLabel tituloRellenar5;
+    private javax.swing.JLabel tituloRellenar6;
     public javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtApellidoEncargado;
     private javax.swing.JTextField txtCedulaAfiliacion;

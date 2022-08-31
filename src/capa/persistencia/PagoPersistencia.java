@@ -118,7 +118,7 @@ public class PagoPersistencia {
             ps.setString(5, pago.getIdPago());
             
             ps.executeUpdate();
-            System.out.println("Local modificado correctamente");
+            System.out.println("Pago modificado correctamente");
             ps.close();
 
         } catch (PersistenciaException ex) {

@@ -38,7 +38,7 @@ public class LocalPersistencia {
 
             st = con.createStatement();
             rs = st.executeQuery("SELECT * FROM local");
-
+            
             while (rs.next()) {
                 Local local = new Local();
                 
@@ -70,6 +70,71 @@ public class LocalPersistencia {
         return locales;
     }
 
+    public Locales listarLocalesFiltradosPorIdNegocio(Local local) throws LocalException {
+        Locales locales = new Locales();
+
+        try {
+
+            Conexion nuevoObjetoConexion = new Conexion();
+            Connection con = nuevoObjetoConexion.conectar();
+
+            ResultSet rs = null;
+            PreparedStatement ps = null;
+            
+            /*
+            String query = "SELECT * FROM local where (idNegocio=?)";
+
+            Statement stmt = con.createStatement();
+            rs =  stmt.executeQuery(query);
+            */
+            
+            ps = con.prepareStatement("SELECT * FROM local where (idNegocio=?)");
+            ps.setString(1, local.getIdNegocio());
+            
+            rs = ps.executeQuery();
+                        
+            System.out.println(ps);
+            System.out.println(rs);
+            System.out.println(rs.next());
+            
+           // ps.close();
+
+            
+            while (rs.next()) {
+                
+                int LOCid = rs.getInt("idLocal");
+                String idLOCInt = String.valueOf(LOCid);
+                local.setIdLocal(idLOCInt);
+                
+                int NEGid = rs.getInt("idNegocio");
+                String idNegInt = String.valueOf(NEGid);
+                local.setIdNegocio(idNegInt);
+                
+                local.setDireccionLocal(rs.getString("direccionLocal"));
+                local.setNombreEncargado(rs.getString("nombreEncargado"));
+                local.setApellidoEncargado(rs.getString("apellidoEncargado"));
+                
+                int LocCiEncargado = rs.getInt("ciEncargado");
+                String ciEncargadoInt = String.valueOf(LocCiEncargado);
+                local.setCiEncargado(ciEncargadoInt);
+                
+                locales.agregarLocal(local);
+                
+            }
+            ps.close();
+        } catch (PersistenciaException ex) {
+            throw new LocalException("No pude encontrar el local");
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+            throw new LocalException("No pude buscar el local, error en la base de datos.");
+        }
+        finally{
+           // ps.close();
+
+        }
+        return locales;
+    }
+    
     public Local agregarLocal(Local local) throws LocalException {
 
         try {

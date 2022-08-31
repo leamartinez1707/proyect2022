@@ -171,6 +171,15 @@ public class FachadaLogica {
 
     }
 
+    public static Locales listarLocalesFiltradosPorIdNegocio(Local local) throws LocalException {
+        LocalPersistencia lp = new LocalPersistencia();
+
+        Locales mostrarLocales = lp.listarLocalesFiltradosPorIdNegocio(local);
+
+        return mostrarLocales;
+
+    }
+    
     public static void agregarLocal(Local local) throws LocalException {
 
         LocalPersistencia lp = new LocalPersistencia();
