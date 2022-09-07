@@ -7,7 +7,7 @@ package capa.logica;
 
 /**
  *
- * @author Leandro
+ * @author Axel Albano Arias Rodríguez, Leandro Nahuel Martínez Santos, Andrés Laureano Pardo Brun, Ruben Alejandro Perurena Akrabian
  */
 public class Afiliacion {
 
@@ -15,6 +15,15 @@ public class Afiliacion {
         String nombreAfiliacion;
         String ciAfiliado;
         String descripcion;
+        String fechaAfiliacion;
+
+    public String getFechaAfiliacion() {
+        return fechaAfiliacion;
+    }
+
+    public void setFechaAfiliacion(String fechaAfiliacion) {
+        this.fechaAfiliacion = fechaAfiliacion;
+    }
 
     public String getIdAfiliacion() {
         return idAfiliacion;

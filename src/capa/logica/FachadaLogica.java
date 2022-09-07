@@ -25,7 +25,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author leandro1707
+ * @author Axel Albano Arias Rodríguez, Leandro Nahuel Martínez Santos, Andrés Laureano Pardo Brun, Ruben Alejandro Perurena Akrabian
  */
 public class FachadaLogica {
 
@@ -170,8 +170,9 @@ public class FachadaLogica {
         return mostrarLocales;
 
     }
-
+    
     public static Locales listarLocalesFiltradosPorIdNegocio(Local local) throws LocalException {
+        
         LocalPersistencia lp = new LocalPersistencia();
 
         Locales mostrarLocales = lp.listarLocalesFiltradosPorIdNegocio(local);
@@ -179,7 +180,7 @@ public class FachadaLogica {
         return mostrarLocales;
 
     }
-    
+
     public static void agregarLocal(Local local) throws LocalException {
 
         LocalPersistencia lp = new LocalPersistencia();

@@ -22,9 +22,10 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author a
+ * @author Axel Albano Arias Rodríguez, Leandro Nahuel Martínez Santos, Andrés Laureano Pardo Brun, Ruben Alejandro Perurena Akrabian
  */
 public class LocalPersistencia {
+
     public Locales listarLocales() throws LocalException {
         Locales locales = new Locales();
 
@@ -38,26 +39,26 @@ public class LocalPersistencia {
 
             st = con.createStatement();
             rs = st.executeQuery("SELECT * FROM local");
-            
+
             while (rs.next()) {
                 Local local = new Local();
-                
+
                 int LOCid = rs.getInt("idLocal");
                 String idLOCInt = String.valueOf(LOCid);
                 local.setIdLocal(idLOCInt);
-                
+
                 int NEGid = rs.getInt("idNegocio");
                 String idNegInt = String.valueOf(NEGid);
                 local.setIdNegocio(idNegInt);
-                
+
                 local.setDireccionLocal(rs.getString("direccionLocal"));
                 local.setNombreEncargado(rs.getString("nombreEncargado"));
                 local.setApellidoEncargado(rs.getString("apellidoEncargado"));
-                
+
                 int LocCiEncargado = rs.getInt("ciEncargado");
                 String ciEncargadoInt = String.valueOf(LocCiEncargado);
                 local.setCiEncargado(ciEncargadoInt);
-                
+
                 locales.agregarLocal(local);
             }
 
@@ -71,6 +72,7 @@ public class LocalPersistencia {
     }
 
     public Locales listarLocalesFiltradosPorIdNegocio(Local local) throws LocalException {
+
         Locales locales = new Locales();
 
         try {
@@ -80,46 +82,37 @@ public class LocalPersistencia {
 
             ResultSet rs = null;
             PreparedStatement ps = null;
-            
-            /*
-            String query = "SELECT * FROM local where (idNegocio=?)";
 
-            Statement stmt = con.createStatement();
-            rs =  stmt.executeQuery(query);
-            */
-            
+
             ps = con.prepareStatement("SELECT * FROM local where (idNegocio=?)");
             ps.setString(1, local.getIdNegocio());
-            
+
             rs = ps.executeQuery();
-                        
+
             System.out.println(ps);
             System.out.println(rs);
             System.out.println(rs.next());
-            
-           // ps.close();
 
-            
             while (rs.next()) {
-                
+
                 int LOCid = rs.getInt("idLocal");
                 String idLOCInt = String.valueOf(LOCid);
                 local.setIdLocal(idLOCInt);
-                
+
                 int NEGid = rs.getInt("idNegocio");
                 String idNegInt = String.valueOf(NEGid);
                 local.setIdNegocio(idNegInt);
-                
+
                 local.setDireccionLocal(rs.getString("direccionLocal"));
                 local.setNombreEncargado(rs.getString("nombreEncargado"));
                 local.setApellidoEncargado(rs.getString("apellidoEncargado"));
-                
+
                 int LocCiEncargado = rs.getInt("ciEncargado");
                 String ciEncargadoInt = String.valueOf(LocCiEncargado);
                 local.setCiEncargado(ciEncargadoInt);
-                
+
                 locales.agregarLocal(local);
-                
+
             }
             ps.close();
         } catch (PersistenciaException ex) {
@@ -127,14 +120,13 @@ public class LocalPersistencia {
         } catch (SQLException ex) {
             Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
             throw new LocalException("No pude buscar el local, error en la base de datos.");
-        }
-        finally{
-           // ps.close();
+        } finally {
+            // ps.close();
 
         }
         return locales;
     }
-    
+
     public Local agregarLocal(Local local) throws LocalException {
 
         try {
@@ -144,8 +136,7 @@ public class LocalPersistencia {
             PreparedStatement ps = null;
 
             ps = con.prepareStatement("INSERT INTO Local (idLocal, idNegocio, direccionLocal, nombreEncargado, apellidoEncargado, ciEncargado) VALUES (?, ?, ?, ?, ?, ?)");
-            
-                        
+
             ps.setString(1, local.getIdLocal());
             ps.setString(2, local.getIdNegocio());
             ps.setString(3, local.getDireccionLocal());
@@ -165,9 +156,9 @@ public class LocalPersistencia {
         }
         return local;
     }
-    
-    public Local modificarLocal(Local local) throws LocalException{
-        
+
+    public Local modificarLocal(Local local) throws LocalException {
+
         try {
 
             Conexion nuevoObjetoConexion = new Conexion();
@@ -175,14 +166,14 @@ public class LocalPersistencia {
             PreparedStatement ps = null;
 
             ps = con.prepareStatement("UPDATE local SET idNegocio=?, direccionLocal=?, nombreEncargado=?, apellidoEncargado=?, ciEncargado=?" + "WHERE idLocal=?");
-               
+
             ps.setString(1, local.getIdNegocio());
             ps.setString(2, local.getDireccionLocal());
             ps.setString(3, local.getNombreEncargado());
             ps.setString(4, local.getApellidoEncargado());
             ps.setString(5, local.getCiEncargado());
             ps.setString(6, local.getIdLocal());
-            
+
             ps.executeUpdate();
             System.out.println("Local modificado correctamente");
             ps.close();
@@ -195,30 +186,29 @@ public class LocalPersistencia {
         }
         return local;
     }
-            
-    
-    public Local eliminarLocal(Local local) throws LocalException{
-        
+
+    public Local eliminarLocal(Local local) throws LocalException {
+
         try {
-              
+
             Conexion nuevoObjetoConexion = new Conexion();
             Connection con = nuevoObjetoConexion.conectar();
             PreparedStatement ps = null;
-             
+
             ps = con.prepareStatement("DELETE FROM local WHERE (idLocal=?)");
-            
+
             ps.setString(1, local.getIdLocal());
             ps.executeUpdate();
             System.out.println("Local eliminado correctamente");
             ps.close();
 
-           } catch (PersistenciaException ex) {
-               throw new LocalException("No se pudo eliminar el local");
-          } catch (SQLException ex) {
+        } catch (PersistenciaException ex) {
+            throw new LocalException("No se pudo eliminar el local");
+        } catch (SQLException ex) {
             Logger.getLogger(PersonaPersistencia.class.getName()).log(Level.SEVERE, null, ex);
             throw new LocalException("No se pudo eliminar el local, error en la base de datos.");
         }
-          return local;
+        return local;
     }
-           
+
 }

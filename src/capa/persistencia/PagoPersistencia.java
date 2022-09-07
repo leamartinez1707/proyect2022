@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author a
+ * @author Axel Albano Arias Rodríguez, Leandro Nahuel Martínez Santos, Andrés Laureano Pardo Brun, Ruben Alejandro Perurena Akrabian
  */
 public class PagoPersistencia {
     public Pagos listarPagos() throws PagoException {

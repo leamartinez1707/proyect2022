@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author a
+ * @author Axel Albano Arias Rodríguez, Leandro Nahuel Martínez Santos, Andrés Laureano Pardo Brun, Ruben Alejandro Perurena Akrabian
  */
 // JDBC  CONNECTOR:
 // jdbc:mysql://localhost:3306/ProyectoBios2022NombrePendiente?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC [root on Default schema]
@@ -63,6 +63,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         botonRegistrarse = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
+        btnInstrucciones = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -84,11 +85,11 @@ public class VentanaLogin extends javax.swing.JFrame {
         jLabelUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelUsuario.setText("Usuario:");
         jLabelUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 80, 40));
+        jPanel1.add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 380, 80, 40));
 
         jLabelContrasena.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelContrasena.setText("Contraseña: ");
-        jPanel1.add(jLabelContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, 90, 40));
+        jPanel1.add(jLabelContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, 90, 40));
 
         campoUsuario.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         campoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -97,10 +98,10 @@ public class VentanaLogin extends javax.swing.JFrame {
                 campoUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(campoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, 90, -1));
+        jPanel1.add(campoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 390, 90, -1));
 
         campoClave.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel1.add(campoClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 90, -1));
+        jPanel1.add(campoClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 430, 90, -1));
 
         botonCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botonCancelar.setText("Cancelar");
@@ -151,6 +152,19 @@ public class VentanaLogin extends javax.swing.JFrame {
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 260, 10));
 
+        btnInstrucciones.setText("Instrucciones");
+        btnInstrucciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInstruccionesActionPerformed(evt);
+            }
+        });
+        btnInstrucciones.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnInstruccionesKeyPressed(evt);
+            }
+        });
+        jPanel1.add(btnInstrucciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 440, 100, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 480));
 
         pack();
@@ -166,7 +180,7 @@ public class VentanaLogin extends javax.swing.JFrame {
 
     private void botonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConectarActionPerformed
         try {
-            //Llamo a la fachada logica
+            // Llamo a la fachada logica
 
             usuarioEscrito = campoUsuario.getText();
             claveEscrita = campoClave.getText();
@@ -186,14 +200,14 @@ public class VentanaLogin extends javax.swing.JFrame {
 
             Boolean existe = FachadaLogica.existeUsuario(nuevoObjetoUsuario);
             if (existe) {
-                //le doy la bienvenida
+                // Le doy la bienvenida al usuario ingresado.
                 JOptionPane.showMessageDialog(null, "Usuario correcto");
                 JOptionPane.showMessageDialog(null, "Bienvenido/a " + usuarioEscrito);
                 VentanaPrincipal nuevaVentanaPrincipal = new VentanaPrincipal();
                 nuevaVentanaPrincipal.setVisible(true);
                 this.setVisible(false);
             } else {
-                //lo saco pa juera
+                // No existe, no lo dejo ingresar
                 JOptionPane.showMessageDialog(null, "El usuario ingresado no existe");
                 System.out.println("No existe el usuario");
             }
@@ -210,6 +224,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistrarseActionPerformed
 
     private void botonConectarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_botonConectarKeyPressed
+
         char cTeclaPresionada = evt.getKeyChar();
 
         if (cTeclaPresionada == KeyEvent.VK_ENTER) {
@@ -233,6 +248,21 @@ public class VentanaLogin extends javax.swing.JFrame {
             botonRegistrarse.doClick();
         }
     }//GEN-LAST:event_botonRegistrarseKeyPressed
+
+    private void btnInstruccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInstruccionesActionPerformed
+
+        Instrucciones instru = new Instrucciones();
+        instru.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnInstruccionesActionPerformed
+
+    private void btnInstruccionesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnInstruccionesKeyPressed
+        char zTeclaPresionada = evt.getKeyChar();
+
+        if (zTeclaPresionada == KeyEvent.VK_ENTER) {
+            btnInstrucciones.doClick();
+        }
+    }//GEN-LAST:event_btnInstruccionesKeyPressed
 
     /**
      * @param args the command line arguments
@@ -273,6 +303,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonConectar;
     private javax.swing.JButton botonRegistrarse;
+    private javax.swing.JButton btnInstrucciones;
     private javax.swing.JPasswordField campoClave;
     private javax.swing.JTextField campoUsuario;
     private javax.swing.JLabel jLabel1;

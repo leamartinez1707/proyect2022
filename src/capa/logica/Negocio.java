@@ -7,7 +7,7 @@ package capa.logica;
 
 /**
  *
- * @author Leandro
+ * @author Axel Albano Arias Rodríguez, Leandro Nahuel Martínez Santos, Andrés Laureano Pardo Brun, Ruben Alejandro Perurena Akrabian
  */
 public class Negocio {
     

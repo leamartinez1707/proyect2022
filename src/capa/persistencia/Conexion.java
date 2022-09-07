@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author a
+ * @author Axel Albano Arias Rodríguez, Leandro Nahuel Martínez Santos, Andrés Laureano Pardo Brun, Ruben Alejandro Perurena Akrabian
  */
 
 // JDBC  CONNECTOR:
@@ -45,7 +45,7 @@ public class Conexion {
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Biosearcher?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", usuario, contrasena);
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Biosearcher?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=America/Montevideo", usuario, contrasena);
             
         } catch (SQLException ex) {
             throw new PersistenciaException("Fallo en BD ");
